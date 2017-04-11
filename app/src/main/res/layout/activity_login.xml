@@ -18,7 +18,7 @@
 
     <Button
         android:id="@+id/button_google_login"
-        android:width="250dp"
+        android:width="@dimen/styled_button_width"
         style="@style/FirebaseUI.Button.AccountChooser.GoogleButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
 
     <Button
         android:id="@+id/button_email_login"
-        android:width="250dp"
+        android:width="@dimen/styled_button_width"
         style="@style/FirebaseUI.Button.AccountChooser.EmailButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
 
     <Button
         android:id="@+id/button_facebook_login"
-        android:width="250dp"
+        android:width="@dimen/styled_button_width"
         style="@style/FirebaseUI.Button.AccountChooser.FacebookButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -48,17 +48,17 @@
 
     <Button
         android:id="@+id/button_github_login"
+        android:width="@dimen/styled_button_width"
         style="@style/FirebaseUI.Button.AccountChooser.GitHubButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/button_facebook_login"
         android:layout_centerHorizontal="true"
-        android:width="250dp"
         android:text="@string/button_github" />
 
     <Button
         android:id="@+id/button_twitter_login"
-        android:width="250dp"
+        android:width="@dimen/styled_button_width"
         style="@style/FirebaseUI.Button.AccountChooser.TwitterButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

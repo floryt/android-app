@@ -11,9 +11,8 @@
         android:theme="@style/PurpleTheme">
 
         <activity
-            android:name="com.floryt.app.LoginActivity"
-            android:label="@string/title_activity_login">
-
+            android:name=".LoadingActivity"
+            android:theme="@style/PurpleTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -21,10 +20,14 @@
         </activity>
 
         <activity
-            android:name="com.floryt.app.MainActivity"
+            android:name=".LoginActivity"
+            android:label="@string/title_activity_login"/>
+
+        <activity
+            android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/PurpleTheme.NoActionBar">
-        </activity>
+            android:theme="@style/PurpleTheme.NoActionBar"/>
+
     </application>
 
 </manifest>
