@@ -2,6 +2,7 @@ package com.floryt.app;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -23,6 +24,8 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -30,26 +33,6 @@ public class MainActivity extends AppCompatActivity
 
     private GoogleApiClient mGoogleApiClient;
     private FirebaseUser currentUser;
-
-    @Override
-    public void onStart() {
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();
-        mGoogleApiClient.connect();
-
-        currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (currentUser == null){
-            Toast.makeText(this,"currentUser is null",Toast.LENGTH_LONG).show();
-        }
-        // TODO fix setUserHeader, understand FirebaseUser class
-        //setUserHeader(currentUser);
-        super.onStart();
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,9 +65,34 @@ public class MainActivity extends AppCompatActivity
         TextView userDisplayName = (TextView) findViewById(R.id.userDisplayName);
         TextView userEmail = (TextView) findViewById(R.id.userEmail);
 
-        userImage.setImageURI(currentUser.getPhotoUrl());
-        userDisplayName.setText(currentUser.getDisplayName());
-        userEmail.setText(currentUser.getEmail());
+        // TODO fix setUserHeader, understand FirebaseUser class
+//        userImage.setImageURI(currentUser.getPhotoUrl());
+//        userDisplayName.setText(currentUser.getDisplayName());
+//        userEmail.setText(currentUser.getEmail());
+    }
+
+    @Override
+    public void onStart() {
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
+        mGoogleApiClient.connect();
+
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser == null){
+            Toast.makeText(this,"currentUser is null",Toast.LENGTH_LONG).show();
+        }
+
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String token = FirebaseInstanceId.getInstance().getToken();
+        if(token == null) return;
+        FirebaseDatabase.getInstance().getReference("Tokens/"+uid).setValue(token);
+        setUserHeader(currentUser);
+        super.onStart();
     }
 
     @Override
@@ -99,7 +107,7 @@ public class MainActivity extends AppCompatActivity
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
@@ -113,11 +121,15 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void signOut() {
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String token = FirebaseInstanceId.getInstance().getToken();
+        if(token == null) return;
+        FirebaseDatabase.getInstance().getReference("Tokens/"+uid).removeValue();
         FirebaseAuth.getInstance().signOut();
         Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
                 new ResultCallback<Status>() {
                     @Override
-                    public void onResult(Status status) {
+                    public void onResult(@NonNull Status status) {
                         Intent loginActivity = new Intent(getApplicationContext(), LoginActivity.class);
                         startActivity(loginActivity);
                         finish();
