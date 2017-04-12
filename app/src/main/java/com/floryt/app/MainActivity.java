@@ -1,6 +1,7 @@
 package com.floryt.app;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -11,8 +12,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +30,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
+
+import static java.lang.Thread.sleep;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -47,6 +53,7 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                setUserHeader(currentUser);
             }
         });
 
@@ -58,17 +65,23 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        //setUserHeader(currentUser);
     }
 
     private void setUserHeader(FirebaseUser currentUser) {
-        ImageView userImage = (ImageView)findViewById(R.id.userImage);
-        TextView userDisplayName = (TextView) findViewById(R.id.userDisplayName);
-        TextView userEmail = (TextView) findViewById(R.id.userEmail);
+        ImageView userImage = (ImageView)findViewById(R.id.image);
+        TextView userDisplayName = (TextView) findViewById(R.id.name);
+        TextView userEmail = (TextView) findViewById(R.id.email);
 
-        // TODO fix setUserHeader, understand FirebaseUser class
-//        userImage.setImageURI(currentUser.getPhotoUrl());
-//        userDisplayName.setText(currentUser.getDisplayName());
-//        userEmail.setText(currentUser.getEmail());
+        Uri imageUrl = currentUser.getPhotoUrl();
+        String name = currentUser.getDisplayName();
+        String email = currentUser.getEmail();
+
+        //userImage.setImageURI(currentUser.getPhotoUrl());
+        //userDisplayName.setText(currentUser.getDisplayName());
+        //userEmail.setText(currentUser.getEmail());
+        Toast.makeText(MainActivity.this, "Welcome " + name, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -90,8 +103,7 @@ public class MainActivity extends AppCompatActivity
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         String token = FirebaseInstanceId.getInstance().getToken();
         if(token == null) return;
-        FirebaseDatabase.getInstance().getReference("Tokens/"+uid).setValue(token);
-        setUserHeader(currentUser);
+        FirebaseDatabase.getInstance().getReference("Users").child(uid).child("deviceToken").setValue(token);
         super.onStart();
     }
 
@@ -124,7 +136,7 @@ public class MainActivity extends AppCompatActivity
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         String token = FirebaseInstanceId.getInstance().getToken();
         if(token == null) return;
-        FirebaseDatabase.getInstance().getReference("Tokens/"+uid).removeValue();
+        FirebaseDatabase.getInstance().getReference("Users").child(uid).child("deviceToken").removeValue();
         FirebaseAuth.getInstance().signOut();
         Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
                 new ResultCallback<Status>() {

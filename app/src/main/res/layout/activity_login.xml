@@ -8,13 +8,13 @@
 
     <ImageView
         android:id="@+id/logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
         app:srcCompat="@mipmap/floryt"
         android:contentDescription="@string/logo"
-        android:layout_above="@+id/button_google_login" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
 
     <Button
         android:id="@+id/button_google_login"
@@ -22,8 +22,8 @@
         style="@style/FirebaseUI.Button.AccountChooser.GoogleButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
         android:text="@string/button_google"
+        android:layout_above="@+id/button_email_login"
         android:layout_centerHorizontal="true" />
 
     <Button
@@ -33,7 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/button_email"
-        android:layout_below="@+id/button_google_login"
+        android:layout_above="@+id/button_facebook_login"
         android:layout_alignStart="@+id/button_google_login" />
 
     <Button
@@ -42,8 +42,8 @@
         style="@style/FirebaseUI.Button.AccountChooser.FacebookButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
         android:text="@string/button_facebook"
-        android:layout_below="@+id/button_email_login"
         android:layout_alignStart="@+id/button_google_login" />
 
     <Button
