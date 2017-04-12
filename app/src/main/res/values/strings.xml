@@ -24,4 +24,5 @@
     <string name="button_twitter">Sign in with Twitter</string>
     <string name="button_github">Sign in with GitHub</string>
     <string name="title_activity_login">Sign in</string>
+    <string name="usericon">userIcon</string>
 </resources>

@@ -1,8 +1,8 @@
 package com.floryt.app;
 
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -12,30 +12,23 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.bumptech.glide.Glide;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
 
-import static java.lang.Thread.sleep;
-
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    NavigationView navigationView;
 
     private GoogleApiClient mGoogleApiClient;
     private FirebaseUser currentUser;
@@ -63,46 +56,52 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        //setUserHeader(currentUser);
     }
 
+    @MainThread
     private void setUserHeader(FirebaseUser currentUser) {
-        ImageView userImage = (ImageView)findViewById(R.id.image);
-        TextView userDisplayName = (TextView) findViewById(R.id.name);
-        TextView userEmail = (TextView) findViewById(R.id.email);
+        View header = navigationView.getHeaderView(0);
+
+        ImageView userImage = (ImageView) header.findViewById(R.id.userIcon);
+        TextView userDisplayName = (TextView) header.findViewById(R.id.userName);
+        TextView userEmail = (TextView) header.findViewById(R.id.userEmail);
 
         Uri imageUrl = currentUser.getPhotoUrl();
         String name = currentUser.getDisplayName();
         String email = currentUser.getEmail();
 
-        //userImage.setImageURI(currentUser.getPhotoUrl());
-        //userDisplayName.setText(currentUser.getDisplayName());
-        //userEmail.setText(currentUser.getEmail());
+        // TODO make icon circular
+        Glide.with(this)
+                .load(imageUrl)
+                .fitCenter()
+                .into(userImage);
+        userDisplayName.setText(currentUser.getDisplayName());
+        userEmail.setText(currentUser.getEmail());
         Toast.makeText(MainActivity.this, "Welcome " + name, Toast.LENGTH_LONG).show();
     }
 
+
+
     @Override
     public void onStart() {
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();
-        mGoogleApiClient.connect();
+//        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+//                .requestEmail()
+//                .build();
+//
+//        mGoogleApiClient = new GoogleApiClient.Builder(this)
+//                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+//                .build();
+//        mGoogleApiClient.connect();
 
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (currentUser == null){
-            Toast.makeText(this,"currentUser is null",Toast.LENGTH_LONG).show();
-        }
-
-        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        assert currentUser != null;
+        String uid = currentUser.getUid();
         String token = FirebaseInstanceId.getInstance().getToken();
         if(token == null) return;
+        setUserHeader(currentUser);
         FirebaseDatabase.getInstance().getReference("Users").child(uid).child("deviceToken").setValue(token);
         super.onStart();
     }
@@ -133,19 +132,21 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void signOut() {
+        // TODO move to 'common' class as 'removeToken' function
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         String token = FirebaseInstanceId.getInstance().getToken();
         if(token == null) return;
         FirebaseDatabase.getInstance().getReference("Users").child(uid).child("deviceToken").removeValue();
+
         FirebaseAuth.getInstance().signOut();
-        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
-                new ResultCallback<Status>() {
-                    @Override
-                    public void onResult(@NonNull Status status) {
-                        Intent loginActivity = new Intent(getApplicationContext(), LoginActivity.class);
-                        startActivity(loginActivity);
-                        finish();
-                    }
-                });
+//        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
+//                new ResultCallback<Status>() {
+//                    @Override
+//                    public void onResult(@NonNull Status status) {
+//                        Intent loginActivity = new Intent(getApplicationContext(), LoginActivity.class);
+//                        startActivity(loginActivity);
+//                        finish();
+//                    }
+//                });
     }
 }
