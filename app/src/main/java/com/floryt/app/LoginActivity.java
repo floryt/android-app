@@ -7,10 +7,8 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
-import com.floryt.common.AuthHelper;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -28,7 +26,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "SignInActivity";
-//    private GoogleApiClient mGoogleApiClient;
+    private GoogleApiClient mGoogleApiClient;
     private static final int RC_SIGN_IN = 9001;
     private ProgressDialog mProgressDialog;
     private FirebaseAuth mAuth;
@@ -57,12 +55,27 @@ public class LoginActivity extends AppCompatActivity {
             }
         };
 
-
         findViewById(R.id.button_google_login).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showProgressDialog("Signing in...");
-                Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(AuthHelper.getGoogleApiClient(LoginActivity.this));
+                mGoogleApiClient = new GoogleApiClient.Builder(LoginActivity.this)
+                        .enableAutoManage(
+                                LoginActivity.this /* FragmentActivity */,
+                                new GoogleApiClient.OnConnectionFailedListener(){
+                                    @Override
+                                    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+                                        Log.w(TAG, "onConnectionFailed:" + connectionResult.getErrorMessage());
+                                        setStatusMessage("Connection failed");
+                                    }
+                                })
+                        .addApi(Auth.GOOGLE_SIGN_IN_API,
+                                new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                                        .requestIdToken(getString(R.string.default_web_client_id))
+                                        .requestEmail()
+                                        .build())
+                        .build();
+                Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
                 startActivityForResult(signInIntent, RC_SIGN_IN);
             }
         });
@@ -92,7 +105,6 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-
     private void handleSignInResult(GoogleSignInResult result) {
         Log.d(TAG, "handleSignInResult:" + result.isSuccess());
         if (result.isSuccess()) {
@@ -108,8 +120,6 @@ public class LoginActivity extends AppCompatActivity {
             setStatusMessage("Authentication failed");
         }
     }
-
-
 
     private void firebaseAuthWithCredential(AuthCredential credential) {
         Log.d(TAG, "firebaseAuthWithCredential:" + credential.getProvider());
