@@ -23,6 +23,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+// TODO use https://github.com/firebase/FirebaseUI-Android/tree/master/auth
 public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "SignInActivity";
@@ -133,7 +134,6 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Login Success
                             Log.w(TAG, "signInWithCredential:success");
-                            setStatusMessage("Authentication succeeded");
                         } else {
                             // Login Failed
                             Log.w(TAG, "signInWithCredential:", task.getException());

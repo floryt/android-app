@@ -17,12 +17,14 @@
     <string name="contact_us">Contact us</string>
     <string name="about">About</string>
     <string name="log_out">Log out</string>
-    <string name="logo">logo</string>
+    <string name="logo">Logo</string>
     <string name="button_email">Sign in with email</string>
     <string name="button_google">Sign in with Google</string>
     <string name="button_facebook">Sign in with Facebook</string>
     <string name="button_twitter">Sign in with Twitter</string>
     <string name="button_github">Sign in with GitHub</string>
     <string name="title_activity_login">Sign in</string>
-    <string name="user_icon">userIcon</string>
+    <string name="user_icon">user icon</string>
+    <string name="add_user">Add\nuser</string>
+    <string name="save">Save</string>
 </resources>
