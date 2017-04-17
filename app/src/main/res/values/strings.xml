@@ -27,4 +27,8 @@
     <string name="user_icon">user icon</string>
     <string name="add_user">Add\nuser</string>
     <string name="save">Save</string>
+    <string name="name_stub">name</string>
+    <string name="users_stub">user, user, user</string>
+    <string name="more_info_button">more info button</string>
+    <string name="users_header">Users:</string>
 </resources>

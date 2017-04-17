@@ -13,11 +13,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         setTitle("My computers");
-        //setContent(MyComputersFragment.getInstance());
+        setContent(MyComputersFragment.getInstance());
     }
 
     private void setUserHeader(FirebaseUser currentUser) {
@@ -79,7 +80,6 @@ public class MainActivity extends AppCompatActivity
         });
         userDisplayName.setText(currentUser.getDisplayName());
         userEmail.setText(currentUser.getEmail());
-        Toast.makeText(MainActivity.this, "Welcome " + currentUser.getDisplayName(), Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -107,7 +107,13 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
@@ -117,8 +123,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.sign_out_button) {
             signOut();
         }else if (id == R.id.nav_my_computer){
-            setTitle("My computers");
-            setContent(new MyComputersFragment());
+            setContent(MyComputersFragment.getInstance());
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

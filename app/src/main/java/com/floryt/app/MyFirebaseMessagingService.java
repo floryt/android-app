@@ -4,8 +4,12 @@ package com.floryt.app;
  * Created by StevenD on 11/04/2017.
  */
 
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.floryt.app.fragments.MyComputersFragment;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -45,14 +49,26 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         // Check if message contains a notification payload.
         if (remoteMessage.getNotification() != null) {
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
-        }
 
+
+            final String title = remoteMessage.getNotification().getTitle();
+
+            Handler handler = new Handler(Looper.getMainLooper());
+            handler.post(new Runnable() {
+                public void run() {
+                    Toast.makeText(MyComputersFragment.getInstance().getActivity().getApplicationContext(), title, Toast.LENGTH_LONG);
+                }
+            });
+        }
+//        AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+//        builder.setMessage(remoteMessage.getNotification().getBody()).setTitle(remoteMessage.getNotification().getTitle()).show();
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
     }
     // [END receive_message]
 
     private void notifyUser(RemoteMessage remoteMessage) {
+
 
     }
 }

@@ -25,7 +25,6 @@ public class Computer {
     public String getName() {
         return name;
     }
-
     public String getOwnerUid() {
         return ownerUid;
     }
@@ -33,7 +32,7 @@ public class Computer {
         return users;
     }
 
-    public String getUsersString() {
+    public String myGetUsersString() {
         String usersString = "";
 
         for (int i = 0; i < users.size() - 1; i++){
