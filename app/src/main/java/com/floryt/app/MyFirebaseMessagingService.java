@@ -4,14 +4,13 @@ package com.floryt.app;
  * Created by StevenD on 11/04/2017.
  */
 
-import android.os.Handler;
-import android.os.Looper;
+import android.content.Intent;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.floryt.app.fragments.MyComputersFragment;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+
+import java.util.Map;
 
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
@@ -51,14 +50,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
 
 
-            final String title = remoteMessage.getNotification().getTitle();
-
-            Handler handler = new Handler(Looper.getMainLooper());
-            handler.post(new Runnable() {
-                public void run() {
-                    Toast.makeText(MyComputersFragment.getInstance().getActivity().getApplicationContext(), title, Toast.LENGTH_LONG);
-                }
-            });
+            String title = remoteMessage.getNotification().getTitle();
+            Map<String, String> data = remoteMessage.getData();
+            Intent intent = new Intent("com.floryt.sendBroadcast");
+            intent.putExtra("title", title);
+            intent.putExtra("remoteMessage", remoteMessage);
+            sendBroadcast(intent);
         }
 //        AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
 //        builder.setMessage(remoteMessage.getNotification().getBody()).setTitle(remoteMessage.getNotification().getTitle()).show();

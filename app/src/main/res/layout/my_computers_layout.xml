@@ -26,7 +26,7 @@
         android:layout_alignTop="@+id/save_computer_button"
         android:layout_toStartOf="@+id/save_computer_button"
         android:ems="10"
-        android:hint="Computer name"
+        android:hint="@string/computer_name"
         android:inputType="textPersonName"
         android:selectAllOnFocus="false"
         android:maxLines="1"/>
