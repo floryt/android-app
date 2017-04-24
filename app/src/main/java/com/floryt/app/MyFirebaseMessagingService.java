@@ -57,8 +57,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             intent.putExtra("remoteMessage", remoteMessage);
             sendBroadcast(intent);
         }
-//        AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
-//        builder.setMessage(remoteMessage.getNotification().getBody()).setTitle(remoteMessage.getNotification().getTitle()).show();
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
     }
