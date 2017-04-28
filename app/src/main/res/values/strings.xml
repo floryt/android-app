@@ -32,4 +32,8 @@
     <string name="more_info_button">more info button</string>
     <string name="users_header">Users:</string>
     <string name="computer_name">Computer name</string>
+    <string name="title_activity_notification">Notification</string>
+    <string name="no">NO</string>
+    <string name="yes">YES</string>
+    <string name="user_identity_approval_question">Trying to sign in to a computer via Floryt?</string>
 </resources>

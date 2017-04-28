@@ -25,11 +25,11 @@
         android:layout_alignParentStart="true"
         android:layout_alignTop="@+id/save_computer_button"
         android:layout_toStartOf="@+id/save_computer_button"
-        android:ems="10"
         android:hint="@string/computer_name"
         android:inputType="textPersonName"
-        android:selectAllOnFocus="false"
-        android:maxLines="1"/>
+        android:maxLines="1"
+        android:focusable="true"
+        android:focusableInTouchMode="true"/>
 
     <ListView
         android:id="@+id/my_computes_list_view"

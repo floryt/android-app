@@ -125,6 +125,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent("com.floryt.sendBroadcast");
             intent.putExtra("title", "12345678");
             sendBroadcast(intent);
+        }else if (id == R.id.nav_account){
+            Intent intent = new Intent(this, NotificationActivity.class);
+            intent.putExtra("title", "Dummy Title");
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

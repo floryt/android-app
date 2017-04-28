@@ -93,7 +93,7 @@
     <style name="PurpleTheme" parent="FirebaseUI">
         <item name="colorPrimary">@color/material_deep_purple_500</item>
         <item name="colorPrimaryDark">@color/material_deep_purple_700</item>
-        <item name="colorAccent">@color/material_lime_a700</item>
+        <item name="colorAccent">@android:color/holo_purple</item>
         <item name="colorControlNormal">@color/material_deep_purple_500</item>
         <item name="colorControlActivated">@color/material_deep_purple_a200</item>
         <item name="colorControlHighlight">@color/material_lime_a700</item>
@@ -107,6 +107,10 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
+    <style name="PurpleTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="PurpleTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
 </resources>

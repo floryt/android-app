@@ -10,6 +10,8 @@ import android.util.Log;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Map;
 
 
@@ -63,7 +65,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     // [END receive_message]
 
     private void notifyUser(RemoteMessage remoteMessage) {
-
-
+        Intent intent = new Intent(this, NotificationActivity.class);
+        HashMap<String, String> data = new HashMap<>(remoteMessage.getData());
+        Log.d(TAG, data.toString());
+        intent.putExtra("data", data);
+        startActivity(intent);
     }
 }
