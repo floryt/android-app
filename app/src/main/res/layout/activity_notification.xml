@@ -35,7 +35,7 @@
         android:layout_marginStart="24dp"
         android:layout_centerVertical="true"
         android:text="@string/no"
-        android:width="128dp"/>
+        android:width="180dp"/>
 
     <Button
         android:id="@+id/yesButton"
@@ -45,7 +45,7 @@
         android:layout_marginEnd="24dp"
         android:layout_centerVertical="true"
         android:text="@string/yes"
-        android:width="128dp"/>
+        android:width="180dp"/>
 
     <TextView
         android:id="@+id/text_logo"
@@ -57,6 +57,6 @@
         android:text="FLORYT"
         android:textAlignment="center"
         android:textColor="@color/material_deep_purple_700"
-        android:textSize="42sp" />
+        android:textSize="64sp" />
 
 </RelativeLayout>
