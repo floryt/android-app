@@ -41,25 +41,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public static final String TAG = "MainActivityLog";
     NavigationView navigationView;
     private GoogleApiClient mGoogleApiClient;
-    private BroadcastReceiver broadcastReceiver;
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        unregisterReceiver(broadcastReceiver);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        broadcastReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                showCustomDialog();
-            }
-        };
-        registerReceiver(broadcastReceiver, new IntentFilter("com.floryt.sendBroadcast"));
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,24 +94,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
-
         // TODO add all the other functionality
-        if (id == R.id.sign_out_button) {
-            signOut();
-        }else if (id == R.id.nav_my_computer){
-            setContent(MyComputersFragment.getInstance());
-        }else if (id == R.id.nav_share_computers){
-            Intent intent = new Intent("com.floryt.sendBroadcast");
-            intent.putExtra("title", "12345678");
-            sendBroadcast(intent);
-        }else if (id == R.id.nav_account){
-            Intent intent = new Intent(this, NotificationActivity.class);
-            intent.putExtra("title", "Dummy Title");
-            startActivity(intent);
+        switch (id){
+            case R.id.nav_my_computer:
+                setContent(MyComputersFragment.getInstance());
+                break;
+            case R.id.sign_out_button:
+                signOut();
+                break;
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -157,27 +130,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 });
         userDisplayName.setText(currentUser.getDisplayName());
         userEmail.setText(currentUser.getEmail());
-    }
-
-    private void showCustomDialog() {
-        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which){
-                    case DialogInterface.BUTTON_POSITIVE:
-                        //Yes button clicked
-                        break;
-
-                    case DialogInterface.BUTTON_NEGATIVE:
-                        //No button clicked
-                        break;
-                }
-            }
-        };
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Are you sure?").setPositiveButton("Yes", dialogClickListener)
-                .setNegativeButton("No", dialogClickListener).show();
     }
 
     private void setContent(Fragment fragment) {
