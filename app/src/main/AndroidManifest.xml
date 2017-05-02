@@ -47,8 +47,12 @@
             android:theme="@style/PurpleTheme.NoActionBar" />
         <activity android:name=".ComputerInfoActivity" />
         <activity
-            android:name=".NotificationActivity"
+            android:name=".IdentityVerificationActivity"
             android:label="@string/title_activity_notification"
+            android:theme="@style/PurpleTheme.NoActionBar" />
+        <activity
+            android:name=".PermissionRequestActivity"
+            android:label="@string/title_activity_permission_request"
             android:theme="@style/PurpleTheme.NoActionBar"></activity>
     </application>
 

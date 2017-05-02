@@ -4,15 +4,14 @@ package com.floryt.app;
  * Created by StevenD on 11/04/2017.
  */
 
+import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
-import java.io.Serializable;
 import java.util.HashMap;
-import java.util.Map;
 
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
@@ -24,7 +23,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
      *
      * @param remoteMessage Object representing the message received from Firebase Cloud Messaging.
      */
-    // [START receive_message]
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         // [START_EXCLUDE]
@@ -37,7 +35,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         // messages. For more see: https://firebase.google.com/docs/cloud-messaging/concept-options
         // [END_EXCLUDE]
 
-        // TODO Handle FCM messages here.
         // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
         Log.d(TAG, "From: " + remoteMessage.getFrom());
 
@@ -50,24 +47,27 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         // Check if message contains a notification payload.
         if (remoteMessage.getNotification() != null) {
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
-
-
             String title = remoteMessage.getNotification().getTitle();
-            Map<String, String> data = remoteMessage.getData();
-            Intent intent = new Intent("com.floryt.sendBroadcast");
-            intent.putExtra("title", title);
-            intent.putExtra("remoteMessage", remoteMessage);
-            sendBroadcast(intent);
         }
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
     }
-    // [END receive_message]
 
     private void notifyUser(RemoteMessage remoteMessage) {
-        Intent intent = new Intent(this, NotificationActivity.class);
         HashMap<String, String> data = new HashMap<>(remoteMessage.getData());
         Log.d(TAG, data.toString());
+        Class activity;
+        switch (data.get("messageType")){
+            case "identity":
+                activity = IdentityVerificationActivity.class;
+                break;
+            case "permission":
+                activity = PermissionRequestActivity.class;
+                break;
+            default:
+                return;
+        }
+        Intent intent = new Intent(this, activity);
         intent.putExtra("data", data);
         startActivity(intent);
     }

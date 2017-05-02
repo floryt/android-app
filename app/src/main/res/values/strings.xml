@@ -36,4 +36,6 @@
     <string name="no">NO</string>
     <string name="yes">YES</string>
     <string name="user_identity_approval_question">Trying to sign in to a computer via Floryt?</string>
+    <string name="title_activity_permission_request">PermissionRequestActivity</string>
+    <string name="permission_request_question">The shown above user requests a permission to sign in to the presented computer.\nDo you approve?</string>
 </resources>

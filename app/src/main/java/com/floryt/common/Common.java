@@ -48,4 +48,15 @@ public class Common {
                 isApproved? "Identity approved successfully" : "Identity was not approved"
                 , Toast.LENGTH_SHORT).show();
     }
+
+    public static void uploadPermission(Context context, boolean isPermitted, String computerUID, String guestUID) {
+        FirebaseDatabase.getInstance()
+                .getReference("Permissions")
+                .child(computerUID)
+                .child(guestUID)
+                .setValue(isPermitted);
+        Toast.makeText(context,
+                isPermitted? "Permission is given" : "Permission is denied"
+                , Toast.LENGTH_SHORT).show();
+    }
 }

@@ -64,7 +64,7 @@ public class MyComputersFragment extends android.app.Fragment {
 
     public MyComputersFragment() {
         database = FirebaseDatabase.getInstance();
-        myComputers = database.getReference("Computes");
+        myComputers = database.getReference("Computers");
     }
 
     @Nullable
@@ -96,7 +96,7 @@ public class MyComputersFragment extends android.app.Fragment {
             @Override
             protected void populateView(View v, final Computer computer, int position) {
                 ((TextView) v.findViewById(R.id.computer_name)).setText(computer.getName());
-                ((TextView) v.findViewById(R.id.computer_users)).setText(computer.myGetUsersString());
+                ((TextView) v.findViewById(R.id.computer_users)).setText(computer.createUsersString());
                 ((ImageButton) v.findViewById(R.id.computer_item_button)).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

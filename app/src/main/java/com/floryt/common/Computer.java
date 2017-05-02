@@ -10,13 +10,14 @@ import java.util.ArrayList;
 
 public class Computer {
     private String name;
-    private String ownerUid;
+    private String ownerUID;
     private ArrayList<String> users;
 
     public Computer(String ownerUid, String name) {
-        this.ownerUid = ownerUid;
+        this.ownerUID = ownerUid;
         this.name = name;
         users = new ArrayList<String>();
+        //noinspection ConstantConditions
         users.add(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
     }
 
@@ -25,14 +26,14 @@ public class Computer {
     public String getName() {
         return name;
     }
-    public String getOwnerUid() {
-        return ownerUid;
+    public String getOwnerUID() {
+        return ownerUID;
     }
     public ArrayList<String> getUsers() {
         return users;
     }
 
-    public String myGetUsersString() {
+    public String createUsersString() {
         String usersString = "";
 
         for (int i = 0; i < users.size() - 1; i++){

@@ -10,27 +10,23 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.floryt.common.Common;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
 
-public class NotificationActivity extends AppCompatActivity {
+public class IdentityVerificationActivity extends AppCompatActivity {
     HashMap<String, String> data;
     boolean selected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_notification);
+        setContentView(R.layout.activity_identity_verification);
         //noinspection unchecked
         data = (HashMap<String, String>) getIntent().getSerializableExtra("data");
-        final String verificationUID = data.get("verificationUID");
 
         final ImageView userImageImageView = (ImageView) findViewById(R.id.userIcon);
         TextView userNameTextView = (TextView) findViewById(R.id.userName);
