@@ -53,7 +53,7 @@
         <activity
             android:name=".PermissionRequestActivity"
             android:label="@string/title_activity_permission_request"
-            android:theme="@style/PurpleTheme.NoActionBar"></activity>
+            android:theme="@style/PurpleTheme.NoActionBar" />
     </application>
 
 </manifest>
