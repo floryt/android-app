@@ -58,7 +58,6 @@ public class PermissionRequestActivity extends AppCompatActivity {
         final View.OnClickListener uploadPermission = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean value;
                 selected = true;
                 switch (v.getId()) {
                     case R.id.yesButton:
