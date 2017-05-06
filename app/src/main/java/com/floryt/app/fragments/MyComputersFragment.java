@@ -9,8 +9,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -22,9 +20,7 @@ import com.floryt.common.Computer;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.math.BigInteger;
-import java.security.SecureRandom;
+import com.google.firebase.database.Query;
 
 /**
  * Created by Steven on 16/04/2017.
@@ -32,8 +28,9 @@ import java.security.SecureRandom;
 
 public class MyComputersFragment extends android.app.Fragment {
     private static final MyComputersFragment ourInstance = new MyComputersFragment();
+    private final Query myComputers;
     private FirebaseDatabase database;
-    private DatabaseReference myComputers;
+    private DatabaseReference computers;
 
 
 
@@ -64,7 +61,8 @@ public class MyComputersFragment extends android.app.Fragment {
 
     public MyComputersFragment() {
         database = FirebaseDatabase.getInstance();
-        myComputers = database.getReference("Computers");
+        computers = database.getReference("Computers");
+        myComputers = computers.orderByChild("ownerUID").equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid());
     }
 
     @Nullable
@@ -72,25 +70,6 @@ public class MyComputersFragment extends android.app.Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.my_computers_layout, container, false);
         getActivity().setTitle("My computers");
-        Button saveButton = (Button) view.findViewById(R.id.save_computer_button);
-        final EditText nameEditText = (EditText) view.findViewById(R.id.computer_name_edit_text);
-
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String name = nameEditText.getText().toString();
-                if (name.isEmpty()) {
-                    nameEditText.setError("Name is empty");
-                    return;
-                }else if (false/*computerNameExists*/){
-                    nameEditText.setError("Name is taken");
-                }
-
-                String randomUID = new BigInteger(130, new SecureRandom()).toString(32);
-                myComputers.child(randomUID).setValue(new Computer(FirebaseAuth.getInstance().getCurrentUser().getUid(),name));
-            }
-        });
-
         final ListView computerListView = (ListView) view.findViewById(R.id.my_computes_list_view);
         computerListView.setAdapter(new FirebaseListAdapter<Computer>(getActivity(), Computer.class, R.layout.computer_item, myComputers){
             @Override

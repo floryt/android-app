@@ -1,12 +1,7 @@
 package com.floryt.app;
 
-import android.app.AlertDialog;
 import android.app.Fragment;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -133,8 +128,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void setContent(Fragment fragment) {
-        android.app.FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
+        getFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
     }
 
     private void signOut() {
