@@ -32,8 +32,6 @@ public class MyComputersFragment extends android.app.Fragment {
     private FirebaseDatabase database;
     private DatabaseReference computers;
 
-
-
     public static MyComputersFragment getInstance() {
         return ourInstance;
     }

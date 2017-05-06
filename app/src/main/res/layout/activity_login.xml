@@ -14,17 +14,18 @@
         app:srcCompat="@mipmap/floryt"
         android:contentDescription="@string/logo"
         android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_above="@+id/button_google_login"/>
 
     <Button
         android:id="@+id/button_google_login"
-        android:width="@dimen/styled_button_width"
         style="@style/FirebaseUI.Button.AccountChooser.GoogleButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:width="@dimen/styled_button_width"
         android:text="@string/button_google"
         android:layout_above="@+id/button_email_login"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignStart="@+id/button_email_login"/>
 
     <Button
         android:id="@+id/button_email_login"
@@ -34,7 +35,7 @@
         android:layout_height="wrap_content"
         android:text="@string/button_email"
         android:layout_above="@+id/button_facebook_login"
-        android:layout_alignStart="@+id/button_google_login" />
+        android:layout_alignStart="@+id/button_facebook_login"/>
 
     <Button
         android:id="@+id/button_facebook_login"
@@ -42,9 +43,9 @@
         style="@style/FirebaseUI.Button.AccountChooser.FacebookButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
         android:text="@string/button_facebook"
-        android:layout_alignStart="@+id/button_google_login" />
+        android:layout_above="@+id/button_github_login"
+        android:layout_alignStart="@+id/button_github_login"/>
 
     <Button
         android:id="@+id/button_github_login"
@@ -52,9 +53,9 @@
         style="@style/FirebaseUI.Button.AccountChooser.GitHubButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/button_facebook_login"
-        android:layout_centerHorizontal="true"
-        android:text="@string/button_github" />
+        android:text="@string/button_github"
+        android:layout_above="@+id/button_twitter_login"
+        android:layout_centerHorizontal="true"/>
 
     <Button
         android:id="@+id/button_twitter_login"
@@ -63,7 +64,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/button_twitter"
-        android:layout_below="@+id/button_github_login"
-        android:layout_alignStart="@+id/button_facebook_login" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/button_github_login"/>
 
 </RelativeLayout>

@@ -22,7 +22,15 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.floryt.app.fragments.AboutFragment;
+import com.floryt.app.fragments.AccountFragment;
+import com.floryt.app.fragments.ContactUsFragment;
+import com.floryt.app.fragments.DashboardFragment;
+import com.floryt.app.fragments.HelpFragment;
 import com.floryt.app.fragments.MyComputersFragment;
+import com.floryt.app.fragments.NotificationFragment;
+import com.floryt.app.fragments.ShareUsFragment;
+import com.floryt.app.fragments.SharedComputersFragment;
 import com.floryt.common.Common;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -53,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        setContent(MyComputersFragment.getInstance());
+        setContent(DashboardFragment.getInstance());
     }
 
     @Override
@@ -92,8 +100,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
         // TODO add all the other functionality
         switch (id){
-            case R.id.nav_my_computer:
+            case R.id.nav_dashboard:
+                setContent(DashboardFragment.getInstance());
+                break;
+            case R.id.nav_my_computers:
                 setContent(MyComputersFragment.getInstance());
+                break;
+            case R.id.nav_shared_computers:
+                setContent(SharedComputersFragment.getInstance());
+                break;
+            case R.id.nav_account:
+                setContent(AccountFragment.getInstance());
+                break;
+            case R.id.nav_notification:
+                setContent(NotificationFragment.getInstance());
+                break;
+            case R.id.nav_help:
+                setContent(HelpFragment.getInstance());
+                break;
+            case R.id.nav_contact_us:
+                setContent(ContactUsFragment.getInstance());
+                break;
+            case R.id.nav_share_us:
+                setContent(ShareUsFragment.getInstance());
+                break;
+            case R.id.nav_about:
+                setContent(AboutFragment.getInstance());
                 break;
             case R.id.sign_out_button:
                 signOut();

@@ -6,8 +6,8 @@
 
     <string name="action_settings">Settings</string>
     <string name="computers">Computers</string>
-    <string name="my_computers">My Computer</string>
-    <string name="shared_computers">Shared Computer</string>
+    <string name="my_computers">My Computers</string>
+    <string name="shared_computers">Shared Computers</string>
     <string name="settings">Settings</string>
     <string name="account">Account</string>
     <string name="notifications">Notification</string>
@@ -38,4 +38,5 @@
     <string name="user_identity_approval_question">Trying to sign in to a computer via Floryt?</string>
     <string name="title_activity_permission_request">PermissionRequestActivity</string>
     <string name="permission_request_question">The shown above user requests a permission to sign in to the presented computer.\nDo you approve?</string>
+    <string name="dashboard">Dashboard</string>
 </resources>

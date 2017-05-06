@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+        <item
+            android:id="@+id/nav_dashboard"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="@string/dashboard"
+            />
     <item android:title="@string/computers">
         <menu>
             <item
-                android:id="@+id/nav_my_computer"
+                android:id="@+id/nav_my_computers"
                 android:icon="@drawable/ic_desktop_windows_black_24dp"
                 android:title="@string/my_computers" />
             <item
-                android:id="@+id/nav_share_computers"
+                android:id="@+id/nav_shared_computers"
                 android:icon="@drawable/ic_screen_share_black_24dp"
                 android:title="@string/shared_computers" />
         </menu>
