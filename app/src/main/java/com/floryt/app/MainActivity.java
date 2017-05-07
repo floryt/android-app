@@ -4,8 +4,11 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.view.GravityCompat;
@@ -22,6 +25,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.firebase.ui.auth.AuthUI;
 import com.floryt.app.fragments.AboutFragment;
 import com.floryt.app.fragments.AccountFragment;
 import com.floryt.app.fragments.ContactUsFragment;
@@ -35,8 +39,8 @@ import com.floryt.common.Common;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -166,15 +170,35 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void signOut() {
         Common.getInstance().removeToken();
 
-        FirebaseAuth.getInstance().signOut();
-        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
-                new ResultCallback<Status>() {
+//        FirebaseAuth.getInstance().signOut();
+//        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
+//                new ResultCallback<Status>() {
+//                    @Override
+//                    public void onResult(@NonNull Status status) {
+//                        Intent loginActivity = new Intent(getApplicationContext(), LoginActivity.class);
+//                        startActivity(loginActivity);
+//                        finish();
+//                    }
+//                });
+
+        AuthUI.getInstance()
+                .signOut(this)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
-                    public void onResult(@NonNull Status status) {
-                        Intent loginActivity = new Intent(getApplicationContext(), LoginActivity.class);
-                        startActivity(loginActivity);
-                        finish();
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                            finish();
+                        } else {
+                            showSnackbar(R.string.sign_out_failed);
+                        }
                     }
                 });
+    }
+
+    @MainThread
+    private void showSnackbar(@StringRes int errorMessageRes) {
+        Snackbar.make(findViewById(R.id.drawer_layout), errorMessageRes, Snackbar.LENGTH_LONG)
+                .show();
     }
 }
