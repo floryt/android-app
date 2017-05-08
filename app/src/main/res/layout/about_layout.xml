@@ -7,7 +7,13 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="About"/>
+        android:gravity="center"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:text="Complimentary app for Floryt windows credential provider. Made as end course project by Steven Dashevsky and Bar Adar."
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="58dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"/>
 </RelativeLayout>

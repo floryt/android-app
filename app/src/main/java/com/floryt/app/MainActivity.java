@@ -170,17 +170,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void signOut() {
         Common.getInstance().removeToken();
 
-//        FirebaseAuth.getInstance().signOut();
-//        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
-//                new ResultCallback<Status>() {
-//                    @Override
-//                    public void onResult(@NonNull Status status) {
-//                        Intent loginActivity = new Intent(getApplicationContext(), LoginActivity.class);
-//                        startActivity(loginActivity);
-//                        finish();
-//                    }
-//                });
-
         AuthUI.getInstance()
                 .signOut(this)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {

@@ -4,9 +4,17 @@
                 android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="Share us"/>
+        android:gravity="center"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:text="Please, tell your friends about us!
+You may use Facebook, Twitter, Github or evey other social network you'd like"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="58dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"/>
 </RelativeLayout>
