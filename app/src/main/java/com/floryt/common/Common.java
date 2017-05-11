@@ -1,15 +1,17 @@
 package com.floryt.common;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.widget.Toast;
 
-import com.floryt.app.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 /**
- * Created by StevenD on 15/04/2017.
+ * Created by Steven on 15/04/2017.
  */
 
 public class Common {
@@ -49,14 +51,25 @@ public class Common {
                 , Toast.LENGTH_SHORT).show();
     }
 
-    public static void uploadPermission(Context context, boolean isPermitted, String computerUID, String guestUID) {
+    public static void uploadPermission(final Context context, final boolean isPermitted, String permissionUID, String computerUID, String guestUID) {
         FirebaseDatabase.getInstance()
                 .getReference("Permissions")
+                .child(permissionUID)
                 .child(computerUID)
                 .child(guestUID)
-                .setValue(isPermitted);
-        Toast.makeText(context,
-                isPermitted? "Permission is given" : "Permission is denied"
-                , Toast.LENGTH_SHORT).show();
+                .setValue(isPermitted).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()){
+                    Toast.makeText(context,
+                            isPermitted? "Permission is given" : "Permission is denied"
+                            , Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(context,
+                            "Failed to send answer"
+                            , Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 }

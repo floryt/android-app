@@ -58,7 +58,6 @@ public class PermissionRequestActivity extends AppCompatActivity {
         final View.OnClickListener uploadPermission = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selected = true;
                 switch (v.getId()) {
                     case R.id.yesButton:
                         uploadPermission(true);
@@ -87,8 +86,10 @@ public class PermissionRequestActivity extends AppCompatActivity {
 
     private void uploadPermission(boolean isApproved){
         // TODO add timeout
+        selected = true;
         Common.uploadPermission(getApplicationContext(),
                 isApproved,
+                data.get("permissionUID"),
                 data.get("computerUID"),
                 data.get("guestUID"));
     }
