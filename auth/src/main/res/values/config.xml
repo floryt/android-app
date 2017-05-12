@@ -7,7 +7,7 @@
     See:
     https://developers.facebook.com/docs/facebook-login/android
     -->
-    <string name="facebook_application_id" translatable="false">CHANGE-ME</string>
+    <string name="facebook_application_id" translatable="false">300231323748224</string>
 
     <!--
      To enable Chrome Custom Tabs for Facebook Login on devices without the Facebook app
@@ -34,10 +34,10 @@
     Your Twitter Consumer Key. To use Twitter accounts with the demo application, register an
     application with Twitter and provide the following two values.
     -->
-    <string name="twitter_consumer_key" translatable="false">CHANGE-ME</string>
+    <string name="twitter_consumer_key" translatable="false">GrP64LJaaORdGj48UxZhv29G6 </string>
 
     <!--
     Your Twitter Consumer Secret
     -->
-    <string name="twitter_consumer_secret" translatable="false">CHANGE-ME</string>
+    <string name="twitter_consumer_secret" translatable="false">cWaxVVJdqBAsKtsVH4HOfEa9dPe95JXCkdlVjra51eQOCnvc4g</string>
 </resources>

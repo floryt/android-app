@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mGoogleApiClient.connect();
 
         assert FirebaseAuth.getInstance().getCurrentUser() != null;
-        Common.getInstance().saveToken();
+        Common.saveToken();
         setUserHeader(FirebaseAuth.getInstance().getCurrentUser());
         super.onStart();
     }
@@ -168,7 +168,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void signOut() {
-        Common.getInstance().removeToken();
+        Common.removeToken();
 
         AuthUI.getInstance()
                 .signOut(this)
