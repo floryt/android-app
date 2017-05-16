@@ -32,11 +32,11 @@
     <string name="more_info_button">more info button</string>
     <string name="users_header">Users:</string>
     <string name="computer_name">Computer name</string>
-    <string name="title_activity_notification">Notification</string>
+    <string name="title_activity_identity_verification">Identity Verification Request</string>
     <string name="no">NO</string>
     <string name="yes">YES</string>
     <string name="user_identity_approval_question">Trying to sign in to a computer via Floryt?</string>
-    <string name="title_activity_permission_request">PermissionRequestActivity</string>
+    <string name="title_activity_permission_request">Permission Request</string>
     <string name="permission_request_question">The shown above user requests a permission to sign in to the presented computer.\nDo you approve?</string>
     <string name="dashboard">Dashboard</string>
     <string name="sign_in_cancelled">Sign in cancelled</string>
@@ -44,4 +44,5 @@
     <string name="unknown_error">Unknown error</string>
     <string name="unknown_sign_in_response">Unknown sign in response</string>
     <string name="sign_out_failed">Sign out failed</string>
+    <string name="sign_in">Sign in</string>
 </resources>

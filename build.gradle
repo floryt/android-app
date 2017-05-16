@@ -21,6 +21,9 @@ allprojects {
         maven {
             url 'https://maven.fabric.io/public'
         }
+        maven {
+            url "https://s3.amazonaws.com/repo.commonsware.com"
+        }
     }
 }
 

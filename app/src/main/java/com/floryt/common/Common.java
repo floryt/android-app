@@ -15,13 +15,14 @@ import com.google.firebase.iid.FirebaseInstanceId;
  */
 
 public class Common {
-    static public Task<Void> saveToken() {
+    public static Task<Void> saveToken() {
         @SuppressWarnings("ConstantConditions") String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         String token = FirebaseInstanceId.getInstance().getToken();
+        // TODO add listeners
         return FirebaseDatabase.getInstance().getReference("Users").child(uid).child("deviceToken").setValue(token);
     }
 
-    static public Task<Void> removeToken() {
+    public static Task<Void> removeToken() {
         //noinspection ConstantConditions
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         String token = FirebaseInstanceId.getInstance().getToken();
@@ -30,7 +31,7 @@ public class Common {
         return FirebaseDatabase.getInstance().getReference("Users").child(uid).child("deviceToken").removeValue();
     }
 
-    static public void uploadIdentityAnswer(final Context context, final boolean isApproved, String verificationUID) {
+    public static void uploadIdentityAnswer(final Context context, final boolean isApproved, String verificationUID) {
         //noinspection ConstantConditions
         FirebaseDatabase.getInstance()
                 .getReference("IdentityVerifications")
@@ -72,5 +73,9 @@ public class Common {
                 }
             }
         });
+    }
+
+    public static String getUid(){
+        return FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
 }
