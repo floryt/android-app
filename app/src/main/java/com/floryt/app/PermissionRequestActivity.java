@@ -52,14 +52,14 @@ public class PermissionRequestActivity extends AppCompatActivity {
         guestNameTextView.setText(data.get("guestName"));
         guestEmailTextView.setText(data.get("guestEmail"));
 
-        Button yesButton = (Button) findViewById(R.id.yesButton);
+        Button yesButton = (Button) findViewById(R.id.yes_button);
         Button noButton = (Button) findViewById(R.id.noButton);
 
         final View.OnClickListener uploadPermission = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 switch (v.getId()) {
-                    case R.id.yesButton:
+                    case R.id.yes_button:
                         uploadPermission(true);
                         break;
                     case R.id.noButton:

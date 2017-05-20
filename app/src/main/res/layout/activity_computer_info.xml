@@ -28,7 +28,7 @@
         android:textSize="24sp"/>
 
     <ListView
-        android:id="@+id/usersListView"
+        android:id="@+id/users_list_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"

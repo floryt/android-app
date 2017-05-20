@@ -13,21 +13,21 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <ImageView
-        android:id="@+id/userIcon"
+        android:id="@+id/user_icon"
         android:layout_width="72dp"
         android:layout_height="72dp"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:contentDescription="@string/user_icon"/>
 
     <TextView
-        android:id="@+id/userName"
+        android:id="@+id/user_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
 
     <TextView
-        android:id="@+id/userEmail"
+        android:id="@+id/user_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 

@@ -17,7 +17,7 @@ public class ComputerInfoActivity extends AppCompatActivity {
         String computerName = getIntent().getStringExtra("Computer");
         ArrayList<String> users = getIntent().getStringArrayListExtra("Users");
 
-        ListView userListView = (ListView) findViewById(R.id.usersListView);
+        ListView userListView = (ListView) findViewById(R.id.users_list_view);
         ArrayAdapter<String> itemsAdapter =
                 new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, users);
         userListView.setAdapter(itemsAdapter);

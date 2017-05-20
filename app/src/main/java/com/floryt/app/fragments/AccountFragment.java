@@ -53,9 +53,9 @@ public class AccountFragment extends Fragment {
         View view = inflater.inflate(R.layout.account_setting_layout, container, false);
         getActivity().setTitle("Account settings");
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        final ImageView userImage = (ImageView) view.findViewById(R.id.userIcon);
-        TextView userDisplayName = (TextView) view.findViewById(R.id.userName);
-        TextView userEmail = (TextView) view.findViewById(R.id.userEmail);
+        final ImageView userImage = (ImageView) view.findViewById(R.id.user_icon);
+        TextView userDisplayName = (TextView) view.findViewById(R.id.user_name);
+        TextView userEmail = (TextView) view.findViewById(R.id.user_email);
 
         Glide.with(this)
                 .load(currentUser.getPhotoUrl())

@@ -109,7 +109,7 @@ public class DashboardFragment extends Fragment {
                 for(DataSnapshot computerData : dataSnapshot.getChildren()){
                     Computer computer = computerData.getValue(Computer.class);
 
-                    View item = inflater.inflate(R.layout.my_computer_item, null);
+                    View item = inflater.inflate(R.layout.my_computer_card_item, null);
                     item.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {

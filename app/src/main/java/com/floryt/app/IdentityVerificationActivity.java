@@ -28,9 +28,9 @@ public class IdentityVerificationActivity extends AppCompatActivity {
         //noinspection unchecked
         data = (HashMap<String, String>) getIntent().getSerializableExtra("data");
 
-        final ImageView userImageImageView = (ImageView) findViewById(R.id.userIcon);
-        TextView userNameTextView = (TextView) findViewById(R.id.userName);
-        TextView userEmailTextView = (TextView) findViewById(R.id.userEmail);
+        final ImageView userImageImageView = (ImageView) findViewById(R.id.user_icon);
+        TextView userNameTextView = (TextView) findViewById(R.id.user_name);
+        TextView userEmailTextView = (TextView) findViewById(R.id.user_email);
         TextView textLogo = (TextView)findViewById(R.id.text_logo);
 
         Typeface custom_font = Typeface.createFromAsset(getAssets(),  "fonts/CFDiamond.ttf");
@@ -51,7 +51,7 @@ public class IdentityVerificationActivity extends AppCompatActivity {
         userNameTextView.setText(data.get("userName"));
         userEmailTextView.setText(data.get("userEmail"));
 
-        Button yesButton = (Button) findViewById(R.id.yesButton);
+        Button yesButton = (Button) findViewById(R.id.yes_button);
         Button noButton = (Button) findViewById(R.id.noButton);
 
         final View.OnClickListener uploadVerification = new View.OnClickListener() {
@@ -60,7 +60,7 @@ public class IdentityVerificationActivity extends AppCompatActivity {
                 boolean value;
                 selected = true;
                 switch (v.getId()) {
-                    case R.id.yesButton:
+                    case R.id.yes_button:
                         uploadIdentityAnswer(true);
                         break;
                     case R.id.noButton:

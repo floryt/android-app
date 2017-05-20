@@ -143,9 +143,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void setUserHeader(FirebaseUser currentUser) {
         View header = navigationView.getHeaderView(0);
 
-        final ImageView userImage = (ImageView) header.findViewById(R.id.userIcon);
-        TextView userDisplayName = (TextView) header.findViewById(R.id.userName);
-        TextView userEmail = (TextView) header.findViewById(R.id.userEmail);
+        final ImageView userImage = (ImageView) header.findViewById(R.id.user_icon);
+        TextView userDisplayName = (TextView) header.findViewById(R.id.user_name);
+        TextView userEmail = (TextView) header.findViewById(R.id.user_email);
 
         Glide.with(this)
                 .load(currentUser.getPhotoUrl())
