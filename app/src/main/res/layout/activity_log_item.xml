@@ -33,7 +33,7 @@
             android:ellipsize="end"
             android:lines="1"
             android:text="@string/dummy_computer_name"
-            android:textSize="@dimen/msg_text_primary"
+            android:textSize="@dimen/text_primary"
             android:textStyle="bold" />
 
         <TextView

@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.floryt.app.R;
 import com.floryt.common.ActivityLog;
 import com.floryt.common.Common;
+import com.floryt.common.Computer;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,8 +29,10 @@ import com.google.firebase.database.ValueEventListener;
 
 public class DashboardFragment extends Fragment {
     private static final DashboardFragment ourInstance = new DashboardFragment();
-    FirebaseDatabase database;
-    DatabaseReference activityLogRef;
+    private FirebaseDatabase database;
+    private DatabaseReference myRef;
+    private DatabaseReference activityLogRef;
+    private DatabaseReference myComputersRef;
 
     public static DashboardFragment getInstance() {
         return ourInstance;
@@ -37,7 +40,9 @@ public class DashboardFragment extends Fragment {
 
     public DashboardFragment() {
         database = FirebaseDatabase.getInstance();
-        activityLogRef = database.getReference("Users").child(Common.getUid()).child("ActivityLog");
+        myRef = database.getReference("Users").child(Common.getUid());
+        activityLogRef = myRef.child("ActivityLog");
+        myComputersRef = myRef.child("computers");
     }
 
     @Override
@@ -50,19 +55,20 @@ public class DashboardFragment extends Fragment {
     public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dashboard_layout, container, false);
         getActivity().setTitle("Dashboard");
-        final LinearLayout list = (LinearLayout) view.findViewById(R.id.activity_log_list);
+        final LinearLayout activityLogLayout = (LinearLayout) view.findViewById(R.id.activity_log_list);
+        final LinearLayout myComputersLayout = (LinearLayout) view.findViewById(R.id.my_computers_list_layout);
 
-        view.findViewById(R.id.more_button).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.activity_log_more_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getFragmentManager().beginTransaction().replace(R.id.content, MyComputersFragment.getInstance()).commit();
             }
         });
 
-        ValueEventListener valueEventListener = new ValueEventListener() {
+        ValueEventListener activityLogValueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                list.removeAllViews();
+                activityLogLayout.removeAllViews();
                 for(DataSnapshot activityLogData : dataSnapshot.getChildren()){
                     ActivityLog activityLog = activityLogData.getValue(ActivityLog.class);
 
@@ -77,7 +83,7 @@ public class DashboardFragment extends Fragment {
                         }
                     });
 
-                    list.addView(item);
+                    activityLogLayout.addView(item);
                 }
             }
 
@@ -86,9 +92,44 @@ public class DashboardFragment extends Fragment {
                 //TODO implement on cancel
             }
         };
+        activityLogRef.orderByChild("time").limitToFirst(3).addValueEventListener(activityLogValueEventListener);
 
-        activityLogRef.orderByChild("time").limitToFirst(3).addValueEventListener(valueEventListener);
 
+        view.findViewById(R.id.my_computers_more_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentManager().beginTransaction().replace(R.id.content, MyComputersFragment.getInstance()).commit();
+            }
+        });
+
+        ValueEventListener myComputersValueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                myComputersLayout.removeAllViews();
+                for(DataSnapshot computerData : dataSnapshot.getChildren()){
+                    Computer computer = computerData.getValue(Computer.class);
+
+                    View item = inflater.inflate(R.layout.my_computer_item, null);
+                    item.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            //TODO add implementation
+                            Toast.makeText(DashboardFragment.getInstance().getContext(), ((TextView)v.findViewById(R.id.computer_name)).getText(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    ((TextView)item.findViewById(R.id.computer_name)).setText(computer.getName());
+
+                    myComputersLayout.addView(item);
+                }
+                myComputersLayout.addView(inflater.inflate(R.layout.my_computer_show_all_item, null));
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                //TODO add implementation
+            }
+        };
+        myComputersRef.addValueEventListener(myComputersValueEventListener);
 
         return view;
     }
@@ -108,9 +149,11 @@ class ActivityLogItemClickListener implements PopupMenu.OnMenuItemClickListener 
     public boolean onMenuItemClick(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.show_computer:
+                //TODO add implementation
                 Toast.makeText(DashboardFragment.getInstance().getContext(), "Show computer", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.show_user:
+                //TODO add implementation
                 Toast.makeText(DashboardFragment.getInstance().getContext(), "Show user", Toast.LENGTH_SHORT).show();
                 return true;
             default:
