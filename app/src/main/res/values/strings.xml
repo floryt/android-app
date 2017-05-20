@@ -45,4 +45,13 @@
     <string name="unknown_sign_in_response">Unknown sign in response</string>
     <string name="sign_out_failed">Sign out failed</string>
     <string name="sign_in">Sign in</string>
+    <string name="activity_log">Activity Log</string>
+    <string name="dummy_ip">192.168.4.110</string>
+    <string name="dummy_time">10:25 AM</string>
+    <string name="dummy_email">Steven@gmail.com</string>
+    <string name="dummy_computer_name">Computer name</string>
+    <string name="show_computer">Show computer</string>
+    <string name="show_user">Show user</string>
+    <string name="more">MORE</string>
+    <string name="computer_image">Computer image</string>
 </resources>

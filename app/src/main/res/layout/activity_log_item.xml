@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_list_row"
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/padding_list_row"
+                android:paddingStart="?listPreferredItemPaddingLeft"
+                android:paddingEnd="?listPreferredItemPaddingRight"
+                android:paddingTop="@dimen/padding_list_row">
+
+    <ImageView
+        android:layout_width="@dimen/icon_width_height"
+        android:layout_height="@dimen/icon_width_height"
+        android:src="@drawable/ic_account_circle_black_24dp"
+        android:contentDescription="@string/computer_image"/>
+
+    <LinearLayout
+        android:id="@+id/message_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:orientation="vertical"
+        android:paddingStart="72dp"
+        android:paddingEnd="@dimen/padding_list_row">
+
+        <TextView
+            android:id="@+id/computer_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lines="1"
+            android:text="@string/dummy_computer_name"
+            android:textSize="@dimen/msg_text_primary"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/computer_user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lines="1"
+            android:textColor="@color/text_gray"
+            android:text="@string/dummy_email"
+            android:textSize="@dimen/text_secondary" />
+
+        <TextView
+            android:id="@+id/computer_ip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lines="1"
+            android:text="@string/dummy_ip"
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/text_secondary" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/timestamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dummy_time"
+        android:textColor="@color/material_deep_purple_500"
+        android:textSize="@dimen/timestamp"
+        android:textStyle="bold"
+        android:layout_alignParentTop="true"
+        android:layout_toStartOf="@+id/icon_options"/>
+
+    <ImageView
+        android:id="@+id/icon_options"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/ic_more_vert_black_24dp"
+        android:scaleType="fitCenter"
+        android:layout_alignBottom="@+id/message_container"
+        android:layout_alignParentTop="true"/>
+
+</RelativeLayout>
+
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<RelativeLayout-->
+    <!--android:id="@+id/activity_log_item"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:background="?selectableItemBackground"-->
+    <!--android:clickable="true"-->
+    <!--android:minHeight="72dp"-->
+    <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--xmlns:tools="http://schemas.android.com/tools"-->
+    <!--android:contextClickable="false">-->
+
+    <!--<ImageView-->
+        <!--android:id="@+id/primary_action"-->
+        <!--android:layout_width="40dp"-->
+        <!--android:layout_height="40dp"-->
+        <!--android:layout_marginTop="16dp"-->
+        <!--android:scaleType="centerInside"-->
+        <!--android:src="@drawable/ic_desktop_windows_black_24dp" />-->
+
+    <!--<LinearLayout-->
+        <!--android:id="@+id/lines_container"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignWithParentIfMissing="true"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:layout_marginLeft="16dp"-->
+        <!--android:layout_marginRight="16dp"-->
+        <!--android:layout_toEndOf="@+id/primary_action"-->
+        <!--android:layout_toLeftOf="@+id/secondary_action"-->
+        <!--android:layout_toRightOf="@+id/primary_action"-->
+        <!--android:layout_toStartOf="@+id/secondary_action"-->
+        <!--android:orientation="vertical"-->
+        <!--android:paddingBottom="16dp"-->
+        <!--android:paddingTop="16dp">-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/computer_name"-->
+            <!--style="@style/TextAppearance.AppCompat.Body2"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--tools:text="First Line"-->
+            <!--android:maxLines="1"/>-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/computer_ip"-->
+            <!--style="@style/TextAppearance.AppCompat.Body1"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--tools:text="Second Line"-->
+            <!--android:textColor="@color/gray_text"-->
+            <!--android:maxLines="1"/>-->
+
+    <!--</LinearLayout>-->
+
+    <!--&lt;!&ndash; Can be replaced by a widget &ndash;&gt;-->
+    <!--<ImageView-->
+        <!--android:id="@+id/secondary_action"-->
+        <!--android:layout_width="40dp"-->
+        <!--android:layout_height="40dp"-->
+        <!--android:layout_alignParentEnd="true"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_marginLeft="16dp"-->
+        <!--android:layout_marginStart="16dp"-->
+        <!--android:layout_marginTop="16dp"-->
+        <!--android:scaleType="centerInside"-->
+        <!--android:src="@drawable/ic_more_vert_black_24dp"/>-->
+<!--</RelativeLayout>-->
