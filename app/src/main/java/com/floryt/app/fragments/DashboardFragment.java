@@ -45,10 +45,6 @@ public class DashboardFragment extends Fragment {
         myComputersRef = myRef.child("computers");
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
     @Nullable
     @Override
@@ -61,7 +57,7 @@ public class DashboardFragment extends Fragment {
         view.findViewById(R.id.activity_log_more_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentManager().beginTransaction().replace(R.id.content, MyComputersFragment.getInstance()).commit();
+                getFragmentManager().beginTransaction().replace(R.id.content, MyComputersFragment.getInstance()).addToBackStack(null).commit();
             }
         });
 
@@ -98,7 +94,7 @@ public class DashboardFragment extends Fragment {
         view.findViewById(R.id.my_computers_more_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentManager().beginTransaction().replace(R.id.content, MyComputersFragment.getInstance()).commit();
+                getFragmentManager().beginTransaction().replace(R.id.content, MyComputersFragment.getInstance()).addToBackStack(null).commit();
             }
         });
 
@@ -142,22 +138,23 @@ public class DashboardFragment extends Fragment {
         popup.setOnMenuItemClickListener(new ActivityLogItemClickListener());
         popup.show();
     }
-}
 
-class ActivityLogItemClickListener implements PopupMenu.OnMenuItemClickListener {
-    @Override
-    public boolean onMenuItemClick(MenuItem menuItem) {
-        switch (menuItem.getItemId()) {
-            case R.id.show_computer:
-                //TODO add implementation
-                Toast.makeText(DashboardFragment.getInstance().getContext(), "Show computer", Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.show_user:
-                //TODO add implementation
-                Toast.makeText(DashboardFragment.getInstance().getContext(), "Show user", Toast.LENGTH_SHORT).show();
-                return true;
-            default:
+    private class ActivityLogItemClickListener implements PopupMenu.OnMenuItemClickListener {
+        @Override
+        public boolean onMenuItemClick(MenuItem menuItem) {
+            switch (menuItem.getItemId()) {
+                case R.id.show_computer:
+                    //TODO add implementation
+                    Toast.makeText(DashboardFragment.getInstance().getContext(), "Show computer", Toast.LENGTH_SHORT).show();
+                    return true;
+                case R.id.show_user:
+                    //TODO add implementation
+                    Toast.makeText(DashboardFragment.getInstance().getContext(), "Show user", Toast.LENGTH_SHORT).show();
+                    return true;
+                default:
+            }
+            return false;
         }
-        return false;
     }
 }
+

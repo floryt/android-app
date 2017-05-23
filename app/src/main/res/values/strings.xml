@@ -23,7 +23,7 @@
     <string name="button_facebook">Sign in with Facebook</string>
     <string name="button_twitter">Sign in with Twitter</string>
     <string name="button_github">Sign in with GitHub</string>
-    <string name="title_activity_login">Sign in</string>
+    <string name="title_activity_login">Floryt - Sign in</string>
     <string name="user_icon">user icon</string>
     <string name="add_user">Add\nuser</string>
     <string name="save">Save</string>
@@ -55,4 +55,10 @@
     <string name="more">MORE</string>
     <string name="computer_image">Computer image</string>
     <string name="show_all">SHOW ALL</string>
+    <string name="name">Name</string>
+    <string name="ip_address">IP Address</string>
+    <string name="dummy_last_seen">Today, 10:02 PM</string>
+    <string name="location">Location</string>
+    <string name="administrators">Administrators</string>
+    <string name="remove">Remove</string>
 </resources>
