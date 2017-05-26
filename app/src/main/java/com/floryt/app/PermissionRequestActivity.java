@@ -89,8 +89,8 @@ public class PermissionRequestActivity extends AppCompatActivity {
         selected = true;
         Common.uploadPermission(getApplicationContext(),
                 isApproved,
-                data.get("permissionUID"),
-                data.get("computerUID"),
-                data.get("guestUID"));
+                data.get("permissionUid"),
+                data.get("computerUid"),
+                data.get("guestUid"));
     }
 }

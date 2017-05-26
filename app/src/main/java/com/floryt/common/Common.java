@@ -16,27 +16,25 @@ import com.google.firebase.iid.FirebaseInstanceId;
 
 public class Common {
     public static Task<Void> saveToken() {
-        @SuppressWarnings("ConstantConditions") String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String uid = getUid();
         String token = FirebaseInstanceId.getInstance().getToken();
         // TODO add listeners
         return FirebaseDatabase.getInstance().getReference("Users").child(uid).child("deviceToken").setValue(token);
     }
 
     public static Task<Void> removeToken() {
-        //noinspection ConstantConditions
-        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String uid = getUid();
         String token = FirebaseInstanceId.getInstance().getToken();
         if (token == null) return null;
         // TODO add listeners
         return FirebaseDatabase.getInstance().getReference("Users").child(uid).child("deviceToken").removeValue();
     }
 
-    public static void uploadIdentityAnswer(final Context context, final boolean isApproved, String verificationUID) {
-        //noinspection ConstantConditions
+    public static void uploadIdentityAnswer(final Context context, final boolean isApproved, String verificationUid) {
         FirebaseDatabase.getInstance()
                 .getReference("IdentityVerifications")
-                .child(verificationUID)
-                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .child(verificationUid)
+                .child(getUid())
                 .setValue(isApproved).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -53,11 +51,11 @@ public class Common {
         });
     }
 
-    public static void uploadPermission(final Context context, final boolean isPermitted, String permissionUID, String computerUID, String guestUID) {
+    public static void uploadPermission(final Context context, final boolean isPermitted, String permissionUid, String computerUid, String guestUID) {
         FirebaseDatabase.getInstance()
                 .getReference("Permissions")
-                .child(permissionUID)
-                .child(computerUID)
+                .child(permissionUid)
+                .child(computerUid)
                 .child(guestUID)
                 .setValue(isPermitted).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override

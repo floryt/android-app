@@ -85,6 +85,6 @@ public class IdentityVerificationActivity extends AppCompatActivity {
 
     private void uploadIdentityAnswer(boolean isApproved){
         // TODO add timeout
-        Common.uploadIdentityAnswer(getApplicationContext(), isApproved, data.get("verificationUID"));
+        Common.uploadIdentityAnswer(getApplicationContext(), isApproved, data.get("verificationUid"));
     }
 }

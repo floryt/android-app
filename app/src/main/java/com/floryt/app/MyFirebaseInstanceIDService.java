@@ -2,6 +2,7 @@ package com.floryt.app;
 
 import android.util.Log;
 
+import com.floryt.common.Common;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -44,6 +45,6 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
      */
     private void sendRegistrationToServer(String token) {
         assert FirebaseAuth.getInstance().getCurrentUser() != null;
-        FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("deviceToken").setValue(token);
+        FirebaseDatabase.getInstance().getReference("Users").child(Common.getUid()).child("deviceToken").setValue(token);
     }
 }
