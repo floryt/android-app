@@ -68,7 +68,7 @@ public class DashboardFragment extends Fragment {
                 for(DataSnapshot activityLogData : dataSnapshot.getChildren()){
                     ActivityLog activityLog = activityLogData.getValue(ActivityLog.class);
 
-                    View item = inflater.inflate(R.layout.activity_log_item, null);
+                    View item = inflater.inflate(R.layout.activity_log_dashboard_item, null);
                     ((TextView)item.findViewById(R.id.computer_name)).setText(activityLog.getComputerName());
                     ((TextView)item.findViewById(R.id.computer_user)).setText(activityLog.getUser());
                     ((TextView)item.findViewById(R.id.computer_ip)).setText(activityLog.getIp());

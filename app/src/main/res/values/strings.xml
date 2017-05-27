@@ -45,7 +45,7 @@
     <string name="unknown_sign_in_response">Unknown sign in response</string>
     <string name="sign_out_failed">Sign out failed</string>
     <string name="sign_in">Sign in</string>
-    <string name="activity_log">Activity Log</string>
+    <string name="activity_log">Activity log</string>
     <string name="dummy_ip">192.168.4.110</string>
     <string name="dummy_time">10:25 AM</string>
     <string name="dummy_email">Steven@gmail.com</string>
@@ -61,4 +61,9 @@
     <string name="location">Location</string>
     <string name="administrators">Administrators</string>
     <string name="remove">Remove</string>
+    <string name="computer_activity_log">Computer activity log</string>
+    <string name="identity_verification">Identity verification</string>
+    <string name="verified">Verified</string>
+    <string name="options_button">options button</string>
+    <string name="logs">Logs</string>
 </resources>

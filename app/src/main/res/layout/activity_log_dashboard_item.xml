@@ -13,11 +13,9 @@
     android:paddingTop="@dimen/padding_list_row">
 
     <ImageView
-        android:id="@+id/activity_log_icon"
         android:layout_width="@dimen/icon_width_height"
         android:layout_height="@dimen/icon_width_height"
-        android:src="@drawable/ic_fingerprint_black_24dp"
-        android:foregroundGravity="center_vertical"
+        android:src="@drawable/ic_account_circle_black_24dp"
         android:contentDescription="@string/computer_image"/>
 
     <LinearLayout
@@ -30,46 +28,57 @@
         android:paddingEnd="@dimen/padding_list_row">
 
         <TextView
-            android:id="@+id/type"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:lines="1"
-            android:text="@string/identity_verification"
-            android:textSize="@dimen/text_primary"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/result"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:lines="1"
-            android:text="@string/verified"
-            android:textStyle="bold"
-            android:textColor="@color/material_green_700"
-            android:textSize="@dimen/text_secondary" />
-
-        <TextView
             android:id="@+id/computer_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:lines="1"
             android:text="@string/dummy_computer_name"
-            android:textColor="@color/text_gray"
-            android:textSize="@dimen/text_secondary" />
+            android:textSize="@dimen/text_primary"
+            android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/time"
+            android:id="@+id/computer_user"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:lines="1"
-            android:text="@string/dummy_time"
+            android:textColor="@color/text_gray"
+            android:text="@string/dummy_email"
+            android:textSize="@dimen/text_secondary" />
+
+        <TextView
+            android:id="@+id/computer_ip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lines="1"
+            android:text="@string/dummy_ip"
             android:textColor="@color/text_gray"
             android:textSize="@dimen/text_secondary" />
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/timestamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dummy_time"
+        android:textColor="@color/material_deep_purple_500"
+        android:textSize="@dimen/timestamp"
+        android:textStyle="bold"
+        android:layout_alignParentTop="true"
+        android:layout_toStartOf="@+id/icon_options"/>
+
+    <ImageView
+        android:id="@+id/icon_options"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/ic_more_vert_black_24dp"
+        android:scaleType="fitCenter"
+        android:layout_alignBottom="@+id/message_container"
+        android:layout_alignParentTop="true"
+        android:contentDescription="@string/options_button" />
 
 </RelativeLayout>

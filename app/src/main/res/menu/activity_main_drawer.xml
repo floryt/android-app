@@ -1,10 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-        <item
-            android:id="@+id/nav_dashboard"
-            android:icon="@drawable/ic_home_black_24dp"
-            android:title="@string/dashboard"
-            />
+    <item
+        android:id="@+id/nav_dashboard"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="@string/dashboard"
+        />
+
+    <item android:title="@string/logs">
+        <menu>
+            <item
+                android:id="@+id/nav_activity_log"
+                android:icon="@drawable/ic_format_list_bulleted_black_24dp"
+                android:title="@string/activity_log" />
+            <item
+                android:id="@+id/nav_computers_activity_log"
+                android:icon="@drawable/ic_dvr_black_24dp"
+                android:title="@string/computer_activity_log" />
+        </menu>
+    </item>
+
     <item android:title="@string/computers">
         <menu>
             <item

@@ -26,6 +26,7 @@ import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.firebase.ui.auth.AuthUI;
 import com.floryt.app.fragments.AboutFragment;
 import com.floryt.app.fragments.AccountFragment;
+import com.floryt.app.fragments.ActivityLogFragment;
 import com.floryt.app.fragments.ContactUsFragment;
 import com.floryt.app.fragments.DashboardFragment;
 import com.floryt.app.fragments.HelpFragment;
@@ -87,6 +88,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (id){
             case R.id.nav_dashboard:
                 setContent(DashboardFragment.getInstance());
+                break;
+            case R.id.nav_activity_log:
+                setContent(ActivityLogFragment.getInstance());
+                break;
+            case R.id.nav_computers_activity_log:
+//                setContent(ComputersActivityLogFragment.getInstance());
                 break;
             case R.id.nav_my_computers:
                 setContent(MyComputersFragment.getInstance());
