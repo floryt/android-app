@@ -41,7 +41,7 @@ public class ActivityLogFragment extends Fragment{
 
     public ActivityLogFragment() {
         database = FirebaseDatabase.getInstance();
-        activityLogRef = database.getReference("Users").child(Common.getUid()).child("activityLog").orderByChild("time");
+        activityLogRef = database.getReference("Users").child(Common.getUid()).child("activityLog").orderByChild("negtime");
     }
 
     @Nullable
@@ -97,6 +97,12 @@ public class ActivityLogFragment extends Fragment{
                 ((TextView) v.findViewById(R.id.type)).setText(personalActivityLog.getType());
                 ((TextView) v.findViewById(R.id.result)).setText(personalActivityLog.getResult());
                 ((TextView) v.findViewById(R.id.result)).setTextColor(textColor);
+                if (personalActivityLog.getMessage() == null){
+                    ((TextView) v.findViewById(R.id.message)).setVisibility(View.GONE);
+                }else {
+                    ((TextView) v.findViewById(R.id.message)).setVisibility(View.VISIBLE);
+                    ((TextView) v.findViewById(R.id.message)).setText(personalActivityLog.getMessage());
+                }
                 ((TextView) v.findViewById(R.id.computer_name)).setText(String.format("On computer: %s", personalActivityLog.getComputerName()));
                 ((TextView) v.findViewById(R.id.time)).setText(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.UK).format(new java.util.Date (personalActivityLog.getTime()*1000)));
             }

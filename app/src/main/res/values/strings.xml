@@ -66,4 +66,5 @@
     <string name="verified">Verified</string>
     <string name="options_button">options button</string>
     <string name="logs">Logs</string>
+    <string name="dummy_message">Owner is no available</string>
 </resources>

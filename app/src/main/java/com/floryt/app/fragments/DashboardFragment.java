@@ -117,7 +117,6 @@ public class DashboardFragment extends Fragment {
 
                     myComputersLayout.addView(item);
                 }
-                myComputersLayout.addView(inflater.inflate(R.layout.my_computer_show_all_item, null));
             }
 
             @Override

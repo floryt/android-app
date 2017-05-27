@@ -7,12 +7,14 @@ package com.floryt.common;
 public class PersonalActivityLog{
     private String type;
     private String result;
+    private String message;
     private String computerName;
     private long time;
 
-    public PersonalActivityLog(String type, String result, String computerName, long time) {
+    public PersonalActivityLog(String type, String result, String message, String computerName, long time) {
         this.type = type;
         this.result = result;
+        this.message = message;
         this.computerName = computerName;
         this.time = time;
     }
@@ -25,6 +27,10 @@ public class PersonalActivityLog{
 
     public String getResult() {
         return result;
+    }
+
+    public String getMessage() {
+        return message;
     }
 
     public String getComputerName() {
