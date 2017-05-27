@@ -132,8 +132,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @MainThread
     private List<String> getGooglePermissions() {
-        List<String> result = new ArrayList<>();
-        return result;
+        return new ArrayList<>();
     }
 
     @MainThread

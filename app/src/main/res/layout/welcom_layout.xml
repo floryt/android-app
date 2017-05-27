@@ -2,13 +2,18 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-<ImageView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:scaleType="fitStart"
-    android:src="@drawable/ic_floryt_text_inverted"
-    android:layout_alignParentTop="true"
-    android:layout_alignParentStart="true"/>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="fitStart"
+        android:src="@drawable/ic_floryt_colored"
+        android:paddingTop="32dp"
+        android:paddingStart="64dp"
+        android:paddingEnd="64dp"
+        android:paddingBottom="0dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:contentDescription="@string/logo" />
 
     <Button
         android:id="@+id/sign_in_button"

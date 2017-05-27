@@ -52,10 +52,12 @@
         <activity
             android:name=".IdentityVerificationActivity"
             android:label="@string/title_activity_identity_verification"
+            android:excludeFromRecents="true"
             android:theme="@style/PurpleTheme.NoActionBar" />
         <activity
             android:name=".PermissionRequestActivity"
             android:label="@string/title_activity_permission_request"
+            android:excludeFromRecents="true"
             android:theme="@style/PurpleTheme.NoActionBar" />
     </application>
 
