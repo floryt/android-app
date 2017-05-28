@@ -91,7 +91,7 @@ public class LoginActivity extends AppCompatActivity {
     @MainThread
     @DrawableRes
     private int getLogo() {
-        return R.mipmap.floryt;
+        return R.drawable.ic_floryt;
     }
 
     @MainThread
