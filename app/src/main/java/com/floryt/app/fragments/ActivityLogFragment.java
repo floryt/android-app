@@ -103,7 +103,12 @@ public class ActivityLogFragment extends Fragment{
                     ((TextView) v.findViewById(R.id.message)).setVisibility(View.VISIBLE);
                     ((TextView) v.findViewById(R.id.message)).setText(personalActivityLog.getMessage());
                 }
-                ((TextView) v.findViewById(R.id.computer_name)).setText(String.format("On computer: %s", personalActivityLog.getComputerName()));
+                if (personalActivityLog.getComputerName() == null){
+                    ((TextView) v.findViewById(R.id.computer_name)).setVisibility(View.GONE);
+                }else {
+                    ((TextView) v.findViewById(R.id.computer_name)).setVisibility(View.VISIBLE);
+                    ((TextView) v.findViewById(R.id.computer_name)).setText(String.format("On computer: %s", personalActivityLog.getComputerName()));
+                }
                 ((TextView) v.findViewById(R.id.time)).setText(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.UK).format(new java.util.Date (personalActivityLog.getTime()*1000)));
             }
         };
