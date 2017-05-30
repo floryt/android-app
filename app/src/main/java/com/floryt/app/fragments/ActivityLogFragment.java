@@ -1,7 +1,6 @@
 package com.floryt.app.fragments;
 
 import android.app.Fragment;
-import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,7 +15,6 @@ import android.widget.TextView;
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.floryt.app.R;
 import com.floryt.common.Common;
-import com.floryt.common.Computer;
 import com.floryt.common.PersonalActivityLog;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -24,7 +22,6 @@ import com.google.firebase.database.Query;
 
 import java.text.SimpleDateFormat;
 import java.util.Locale;
-import java.util.Objects;
 
 /**
  * Created by Steven on 5/26/2017.
@@ -51,7 +48,6 @@ public class ActivityLogFragment extends Fragment{
         getActivity().setTitle("Activity log");
 
         ListView activityLogListView = (ListView) view.findViewById(R.id.activity_log_list_view);
-//        activityLogListView.setStackFromBottom(true);
 
         final Drawable fingerPrintIcon = ContextCompat.getDrawable(getContext(), R.drawable.ic_fingerprint_black_24dp);
         final Drawable openLockIcon = ContextCompat.getDrawable(getContext(), R.drawable.ic_lock_open_black_24dp);
@@ -98,15 +94,15 @@ public class ActivityLogFragment extends Fragment{
                 ((TextView) v.findViewById(R.id.result)).setText(personalActivityLog.getResult());
                 ((TextView) v.findViewById(R.id.result)).setTextColor(textColor);
                 if (personalActivityLog.getMessage() == null){
-                    ((TextView) v.findViewById(R.id.message)).setVisibility(View.GONE);
+                    v.findViewById(R.id.message).setVisibility(View.GONE);
                 }else {
-                    ((TextView) v.findViewById(R.id.message)).setVisibility(View.VISIBLE);
+                    v.findViewById(R.id.message).setVisibility(View.VISIBLE);
                     ((TextView) v.findViewById(R.id.message)).setText(personalActivityLog.getMessage());
                 }
                 if (personalActivityLog.getComputerName() == null){
-                    ((TextView) v.findViewById(R.id.computer_name)).setVisibility(View.GONE);
+                    v.findViewById(R.id.computer_name).setVisibility(View.GONE);
                 }else {
-                    ((TextView) v.findViewById(R.id.computer_name)).setVisibility(View.VISIBLE);
+                    v.findViewById(R.id.computer_name).setVisibility(View.VISIBLE);
                     ((TextView) v.findViewById(R.id.computer_name)).setText(String.format("On computer: %s", personalActivityLog.getComputerName()));
                 }
                 ((TextView) v.findViewById(R.id.time)).setText(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.UK).format(new java.util.Date (personalActivityLog.getTime()*1000)));

@@ -1,61 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:context="com.floryt.app.IdentityVerificationActivity">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/material_deep_purple_700"
+    tools:context="com.floryt.app.IdentityVerificationActivity">
 
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:src="@drawable/ic_floryt_white_text"/>
+
+    <TextView
+        android:id="@+id/message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/logo"
+        android:text="@string/identity_verification_message"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:textColor="@color/material_gray_300"/>
 
     <include
-        layout="@layout/nav_header_main"
+        android:id="@+id/computer"
+        layout="@layout/popup_screen_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/message"
         android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:id="@+id/user" />
+        android:layout_alignParentEnd="true" />
 
-    <TextView
-        android:id="@+id/messageTextView"
+    <com.google.android.gms.maps.MapView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/computer"
+        android:layout_above="@id/count_down"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:apiKey="">
+
+    </com.google.android.gms.maps.MapView>
+
+    <include
+        android:id="@+id/count_down"
+        layout="@layout/count_down_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/user"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="32dp"
-        android:text="@string/user_identity_approval_question"
-        android:textStyle="bold"
-        android:textSize="18sp"/>
-
-    <Button
-        android:id="@+id/noButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_above="@+id/buttons"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="24dp"
-        android:layout_centerVertical="true"
-        android:text="@string/no"
-        android:width="180dp"/>
+        android:layout_alignParentEnd="true" />
 
-    <Button
-        android:id="@+id/yes_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="24dp"
-        android:layout_centerVertical="true"
-        android:text="@string/yes"
-        android:width="180dp"/>
-
-    <TextView
-        android:id="@+id/text_logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <RelativeLayout
+        android:id="@+id/buttons"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="24dp"
-        android:text="FLORYT"
-        android:textAlignment="center"
-        android:textColor="@color/material_deep_purple_700"
-        android:textSize="64sp" />
+        android:layout_alignParentStart="true">
+
+        <LinearLayout
+            android:id="@+id/center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="horizontal" />
+
+        <LinearLayout
+            android:id="@+id/reject_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/github__solid_white"
+            android:gravity="center"
+            android:layout_alignParentStart="true"
+            android:layout_alignEnd="@+id/center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/reject"
+                android:textColor="@color/github_gray"
+                android:textStyle="bold"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/approve_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/github__solid_white"
+            android:gravity="center"
+            android:layout_alignStart="@+id/center"
+            android:layout_alignParentEnd="true">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/approve"
+                android:textColor="@color/material_deep_purple_700"
+                android:textStyle="bold"/>
+        </LinearLayout>
+    </RelativeLayout>
 
 </RelativeLayout>

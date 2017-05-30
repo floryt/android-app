@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/material_deep_purple_700"
-    tools:context="com.floryt.app.IdentityVerificationActivity">
+    tools:context="com.floryt.app.PermissionRequestActivity">
 
 
     <ImageView
@@ -26,7 +26,7 @@
 
     <include
         android:id="@+id/user"
-        layout="@layout/permission_request_item"
+        layout="@layout/popup_screen_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/message"
@@ -76,7 +76,7 @@
 
     <include
         android:id="@+id/computer"
-        layout="@layout/permission_request_item"
+        layout="@layout/popup_screen_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/arrow"

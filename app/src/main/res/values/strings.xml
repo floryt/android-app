@@ -4,7 +4,6 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Settings</string>
     <string name="computers">Computers</string>
     <string name="my_computers">My Computers</string>
     <string name="shared_computers">Shared Computers</string>
@@ -18,26 +17,13 @@
     <string name="about">About</string>
     <string name="log_out">Log out</string>
     <string name="logo">Logo</string>
-    <string name="button_email">Sign in with email</string>
-    <string name="button_google">Sign in with Google</string>
-    <string name="button_facebook">Sign in with Facebook</string>
-    <string name="button_twitter">Sign in with Twitter</string>
-    <string name="button_github">Sign in with GitHub</string>
     <string name="title_activity_login">Floryt - Sign in</string>
     <string name="user_icon">user icon</string>
-    <string name="add_user">Add\nuser</string>
-    <string name="save">Save</string>
-    <string name="name_stub">name</string>
-    <string name="users_stub">user, user, user</string>
-    <string name="more_info_button">more info button</string>
-    <string name="users_header">Users:</string>
-    <string name="computer_name">Computer name</string>
     <string name="title_activity_identity_verification">Identity Verification Request</string>
     <string name="no">NO</string>
     <string name="yes">YES</string>
     <string name="user_identity_approval_question">Trying to sign in to a computer via Floryt?</string>
     <string name="title_activity_permission_request">Permission Request</string>
-    <string name="permission_request_question">The shown above user requests a permission to sign in to the presented computer.\nDo you approve?</string>
     <string name="dashboard">Dashboard</string>
     <string name="sign_in_cancelled">Sign in cancelled</string>
     <string name="no_internet_connection">No internet connection</string>
@@ -54,7 +40,6 @@
     <string name="show_user">Show user</string>
     <string name="more">MORE</string>
     <string name="computer_image">Computer image</string>
-    <string name="show_all">SHOW ALL</string>
     <string name="name">Name</string>
     <string name="ip_address">IP Address</string>
     <string name="dummy_last_seen">Today, 10:02 PM</string>
@@ -72,4 +57,5 @@
     <string name="timeout_message">\"Time is out\"</string>
     <string name="arrow">arrow</string>
     <string name="new_login_request">New Login Request,</string>
+    <string name="identity_verification_message">Did you just asked to sign in to</string>
 </resources>
