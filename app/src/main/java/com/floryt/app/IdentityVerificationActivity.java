@@ -1,78 +1,172 @@
 package com.floryt.app;
 
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.floryt.common.Common;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.HashMap;
+import java.util.Locale;
 
-public class IdentityVerificationActivity extends AppCompatActivity {
+import static com.floryt.app.R.id.dark;
+import static com.floryt.app.R.id.mapView;
+
+public class IdentityVerificationActivity extends AppCompatActivity implements OnMapReadyCallback  {
     HashMap<String, String> data;
     boolean selected;
+    protected MapView map;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (map != null) {
+            map.onResume();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        if (map != null) {
+            map.onPause();
+        }
+        super.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        if (map != null) {
+            try {
+                map.onDestroy();
+            } catch (NullPointerException e) {
+                Log.e("IdentityVerification", "Error while attempting MapView.onDestroy(), ignoring exception", e);
+            }
+        }
+        super.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        if (map != null) {
+            map.onLowMemory();
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (map != null) {
+            map.onSaveInstanceState(outState);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_identity_verification);
+
         //noinspection unchecked
         data = (HashMap<String, String>) getIntent().getSerializableExtra("data");
 
-        final ImageView userImageImageView = (ImageView) findViewById(R.id.user_icon);
-        TextView userNameTextView = (TextView) findViewById(R.id.user_name);
-        TextView userEmailTextView = (TextView) findViewById(R.id.user_email);
-        TextView textLogo = (TextView)findViewById(R.id.text_logo);
+        RelativeLayout computer = (RelativeLayout) findViewById(R.id.computer);
+        ImageView computerIcon = (ImageView) computer.findViewById(R.id.icon);
+        TextView computerName = (TextView) computer.findViewById(R.id.text_primary);
+        TextView computerLocation = (TextView) computer.findViewById(R.id.text_secondary);
 
-        Typeface custom_font = Typeface.createFromAsset(getAssets(),  "fonts/CFDiamond.ttf");
-        textLogo.setTypeface(custom_font);
+        computerIcon.setImageResource(R.drawable.ic_desktop_windows_black_24dp);
+        computerName.setText(data.get("computerName"));
+        computerLocation.setText(data.get("computerIp"));
 
-        Glide.with(this)
-                .load(data.get("userPhotoUrl"))
-                .asBitmap()
-                .centerCrop()
-                .into(new BitmapImageViewTarget(userImageImageView) {
-                    @Override
-                    protected void setResource(Bitmap resource) {
-                        RoundedBitmapDrawable circularBitmapDrawable = RoundedBitmapDrawableFactory.create(getApplicationContext().getResources(), resource);
-                        circularBitmapDrawable.setCircular(true);
-                        userImageImageView.setImageDrawable(circularBitmapDrawable);
-                    }
-                });
-        userNameTextView.setText(data.get("userName"));
-        userEmailTextView.setText(data.get("userEmail"));
+        map = (MapView) findViewById(R.id.mapView);
+        map.onCreate(savedInstanceState);
+        map.getMapAsync(this);
 
-        Button yesButton = (Button) findViewById(R.id.yes_button);
-        Button noButton = (Button) findViewById(R.id.noButton);
+        LinearLayout yesButton = (LinearLayout) findViewById(R.id.approve_button);
+        LinearLayout noButton = (LinearLayout) findViewById(R.id.reject_button);
 
-        final View.OnClickListener uploadVerification = new View.OnClickListener() {
+        final View.OnClickListener uploadPermission = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean value;
-                selected = true;
                 switch (v.getId()) {
-                    case R.id.yes_button:
+                    case R.id.approve_button:
                         uploadIdentityAnswer(true);
                         break;
-                    case R.id.noButton:
-                    default:
+                    case R.id.reject_button:
                         uploadIdentityAnswer(false);
                 }
                 finish();
             }
         };
 
-        yesButton.setOnClickListener(uploadVerification);
-        noButton.setOnClickListener(uploadVerification);
+        yesButton.setOnClickListener(uploadPermission);
+        noButton.setOnClickListener(uploadPermission);
+
+        LinearLayout countdown = (LinearLayout) findViewById(R.id.count_down);
+        final TextView counter = (TextView) countdown.findViewById(R.id.counter);
+        final LinearLayout progressBar = (LinearLayout) countdown.findViewById(R.id.progress_bar);
+        final long timeLeft = (Long.parseLong(data.get("deadline"))*1000) - System.currentTimeMillis();
+
+        progressBar.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                progressBar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                final int totalWidth = progressBar.getMeasuredWidth();
+
+                CountDownTimer Count = new CountDownTimer(timeLeft, 200) {
+                    public void onTick(long millisUntilFinished) {
+                        double percentage = (millisUntilFinished/1000) / 120.0;
+                        ViewGroup.LayoutParams progressBarLayoutParams = progressBar.getLayoutParams();
+                        progressBarLayoutParams.width = (int) ((double)totalWidth * percentage);
+                        progressBar.setLayoutParams(progressBarLayoutParams);
+
+                        progressBar.setBackgroundColor(Color.rgb((int) (255.0 * (1 - percentage)), (int) (255.0 * percentage), 0));
+
+                        counter.setText(String.format(Locale.UK, "%d seconds remaining", millisUntilFinished / 1000));
+                    }
+
+                    public void onFinish() {
+                        counter.setText(R.string.timeout_message);
+                        finish();
+                    }
+                };
+                Count.start();
+            }
+        });
     }
 
     @Override
@@ -84,7 +178,26 @@ public class IdentityVerificationActivity extends AppCompatActivity {
     }
 
     private void uploadIdentityAnswer(boolean isApproved){
-        // TODO add timeout
+        selected = true;
         Common.uploadIdentityAnswer(getApplicationContext(), isApproved, data.get("verificationUid"));
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        LatLng location = new LatLng(Double.parseDouble(data.get("computerLatitude")), Double.parseDouble(data.get("computerLongitude")));
+        Drawable drawable = ContextCompat.getDrawable(this, R.drawable.ic_desktop_windows_black_24dp);
+
+        Canvas canvas = new Canvas();
+        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        canvas.setBitmap(bitmap);
+        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+        drawable.draw(canvas);
+
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 9));
+
+        googleMap.addMarker(new MarkerOptions()
+                .title("Computer location")
+                .icon(BitmapDescriptorFactory.fromBitmap(bitmap))
+                .position(location));
     }
 }

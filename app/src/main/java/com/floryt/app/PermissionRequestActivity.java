@@ -69,7 +69,7 @@ public class PermissionRequestActivity extends AppCompatActivity {
 
         computerIconImageView.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_desktop_windows_black_24dp));
         computerNameTextView.setText(data.get("computerName"));
-        computerIpTextView.setText(data.get("computerIp"));
+        computerIpTextView.setText(data.get("computerIp").isEmpty() ? getString(R.string.ip_missing_message) : data.get("computerIp"));
 
         LinearLayout yesButton = (LinearLayout) findViewById(R.id.approve_button);
         LinearLayout noButton = (LinearLayout) findViewById(R.id.reject_button);
@@ -133,7 +133,6 @@ public class PermissionRequestActivity extends AppCompatActivity {
     }
 
     private void uploadPermission(boolean isApproved){
-        // TODO add timeout
         selected = true;
         Common.uploadPermission(getApplicationContext(),
                 isApproved,
