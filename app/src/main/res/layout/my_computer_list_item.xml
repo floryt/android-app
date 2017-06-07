@@ -13,7 +13,7 @@
     <ImageView
         android:layout_width="@dimen/icon_width_height"
         android:layout_height="@dimen/icon_width_height"
-        android:src="@drawable/ic_account_circle_black_24dp"
+        android:src="@drawable/ic_desktop_windows_black_24dp"
         android:contentDescription="@string/computer_image"
         android:id="@+id/imageView3"/>
 
@@ -58,11 +58,11 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <View android:id="@+id/tile_divider"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
+        android:layout_height="1dp"
         android:layout_below="@id/message_container"
-        android:background="@color/material_gray_400"
-        android:layout_toEndOf="@+id/imageView3"/>
+        android:background="?android:attr/dividerVertical"
+        android:layout_toEndOf="@+id/imageView3" />
 
 </RelativeLayout>

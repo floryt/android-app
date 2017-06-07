@@ -67,7 +67,7 @@ public class PermissionRequestActivity extends AppCompatActivity {
         guestNameTextView.setText(data.get("guestName"));
         guestEmailTextView.setText(data.get("guestEmail"));
 
-        computerIconImageView.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_desktop_windows_black_24dp));
+        computerIconImageView.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_desktop_windows_white_24dp));
         computerNameTextView.setText(data.get("computerName"));
         computerIpTextView.setText(data.get("computerIp").isEmpty() ? getString(R.string.ip_missing_message) : data.get("computerIp"));
 

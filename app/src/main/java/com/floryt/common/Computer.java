@@ -10,10 +10,17 @@ import java.util.ArrayList;
 
 public class Computer {
     private String name;
+    private String ip;
+    private String latitude, longitude;
     private ArrayList<String> users;
 
-    public Computer(String name) {
+
+    public Computer(String name, String ip, String latitude, String longitude) {
         this.name = name;
+        this.ip = ip;
+        this.latitude = latitude;
+        this.longitude = longitude;
+
         users = new ArrayList<>();
         //noinspection ConstantConditions
         users.add(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
@@ -21,11 +28,24 @@ public class Computer {
 
     public Computer() {}
 
+    public String getIp() {
+        return ip;
+    }
+
     public String getName() {
         return name;
     }
+
     public ArrayList<String> getUsers() {
         return users;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
     }
 
     public String createUsersString() {

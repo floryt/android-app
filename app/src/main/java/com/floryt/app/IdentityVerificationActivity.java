@@ -108,7 +108,7 @@ public class IdentityVerificationActivity extends AppCompatActivity implements O
         TextView computerName = (TextView) computer.findViewById(R.id.text_primary);
         TextView computerLocation = (TextView) computer.findViewById(R.id.text_secondary);
 
-        computerIcon.setImageResource(R.drawable.ic_desktop_windows_black_24dp);
+        computerIcon.setImageResource(R.drawable.ic_desktop_windows_white_24dp);
         computerName.setText(data.get("computerName"));
         computerLocation.setText(data.get("computerIp"));
 
@@ -185,19 +185,11 @@ public class IdentityVerificationActivity extends AppCompatActivity implements O
     @Override
     public void onMapReady(GoogleMap googleMap) {
         LatLng location = new LatLng(Double.parseDouble(data.get("computerLatitude")), Double.parseDouble(data.get("computerLongitude")));
-        Drawable drawable = ContextCompat.getDrawable(this, R.drawable.ic_desktop_windows_black_24dp);
 
-        Canvas canvas = new Canvas();
-        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-        canvas.setBitmap(bitmap);
-        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
-        drawable.draw(canvas);
-
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 9));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 10));
 
         googleMap.addMarker(new MarkerOptions()
                 .title("Computer location")
-                .icon(BitmapDescriptorFactory.fromBitmap(bitmap))
                 .position(location));
     }
 }

@@ -57,7 +57,7 @@ public class DashboardFragment extends Fragment {
         view.findViewById(R.id.activity_log_more_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentManager().beginTransaction().replace(R.id.content, MyComputersFragment.getInstance()).addToBackStack(null).commit();
+                getFragmentManager().beginTransaction().replace(R.id.content, ActivityLogFragment.getInstance()).addToBackStack(null).commit();
             }
         });
 
@@ -85,7 +85,7 @@ public class DashboardFragment extends Fragment {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                //TODO implement on cancel
+                Toast.makeText(getContext(), String.format("Failed to connect to internet: %s", databaseError.getMessage()), Toast.LENGTH_SHORT).show();
             }
         };
         activityLogRef.orderByChild("time").limitToFirst(3).addValueEventListener(activityLogValueEventListener);
@@ -102,15 +102,19 @@ public class DashboardFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 myComputersLayout.removeAllViews();
-                for(DataSnapshot computerData : dataSnapshot.getChildren()){
-                    Computer computer = computerData.getValue(Computer.class);
+                for(final DataSnapshot computerData : dataSnapshot.getChildren()){
+                    final Computer computer = computerData.getValue(Computer.class);
 
                     View item = inflater.inflate(R.layout.my_computer_card_item, null);
                     item.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             //TODO add implementation
-                            Toast.makeText(DashboardFragment.getInstance().getContext(), ((TextView)v.findViewById(R.id.computer_name)).getText(), Toast.LENGTH_SHORT).show();
+                            Bundle bundle = new Bundle();
+                            bundle.putString("computerUid", computerData.getKey());
+                            ComputerProfileFragment computerProfileFragment = new ComputerProfileFragment();
+                            computerProfileFragment.setArguments(bundle);
+                            getFragmentManager().beginTransaction().replace(R.id.content, computerProfileFragment).addToBackStack(null).commit();
                         }
                     });
                     ((TextView)item.findViewById(R.id.computer_name)).setText(computer.getName());

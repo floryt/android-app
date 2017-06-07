@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.view.GravityCompat;
@@ -84,7 +85,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        // TODO add all the other functionality
         switch (id){
             case R.id.nav_dashboard:
                 setContent(DashboardFragment.getInstance());
@@ -153,6 +153,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void setContent(Fragment fragment) {
         getFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
+        getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 
     private void signOut() {

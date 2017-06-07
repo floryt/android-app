@@ -65,4 +65,8 @@
     <string name="new_login_request">New Login Request,</string>
     <string name="identity_verification_message">Did you just asked to sign in to</string>
     <string name="ip_missing_message">\"IP is not available\"</string>
+    <string name="missing_ip_address">Missing IP address</string>
+    <string name="last_seen">Last Seen</string>
+    <string name="missing_records">Missing records</string>
+    <string name="owner">Owner</string>
 </resources>

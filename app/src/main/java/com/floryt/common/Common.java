@@ -7,6 +7,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
 
@@ -18,7 +19,6 @@ public class Common {
     public static Task<Void> saveToken() {
         String uid = getUid();
         String token = FirebaseInstanceId.getInstance().getToken();
-        // TODO add listeners
         return FirebaseDatabase.getInstance().getReference("Users").child(uid).child("deviceToken").setValue(token);
     }
 
@@ -26,7 +26,6 @@ public class Common {
         String uid = getUid();
         String token = FirebaseInstanceId.getInstance().getToken();
         if (token == null) return null;
-        // TODO add listeners
         return FirebaseDatabase.getInstance().getReference("Users").child(uid).child("deviceToken").removeValue();
     }
 
@@ -76,4 +75,6 @@ public class Common {
     public static String getUid(){
         return FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
+
+    public static FirebaseUser getCurrentUser(){ return FirebaseAuth.getInstance().getCurrentUser(); }
 }
