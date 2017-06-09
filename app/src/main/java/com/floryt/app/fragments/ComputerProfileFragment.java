@@ -166,13 +166,13 @@ public class ComputerProfileFragment extends Fragment {
 
         final int greenColor = ContextCompat.getColor(getContext(), R.color.material_green_700);
         final int redColor = ContextCompat.getColor(getContext(), R.color.tw__composer_red);
-        FirebaseDatabase.getInstance().getReference("Users").child(Common.getUid()).child("computers").child(computerUid).child("activityLog").addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference("Users").child(Common.getUid()).child("computers").child(computerUid).child("activityLog").orderByChild("negtime").limitToFirst(3).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 LinearLayout ownersList = (LinearLayout) view.findViewById(R.id.activity_log_list);
+                ownersList.removeAllViews();
                 for (DataSnapshot activityLogData: dataSnapshot.getChildren()){
                     ComputerActivityLog computerActivityLog = activityLogData.getValue(ComputerActivityLog.class);
-                    ownersList.removeAllViews();
                     View item = inflater.inflate(R.layout.activity_log_item, null);
                     Drawable icon = null;
                     int textColor = Integer.MAX_VALUE;
@@ -199,7 +199,6 @@ public class ComputerProfileFragment extends Fragment {
                                     textColor = redColor;
                                     break;
                             }
-
                             break;
                     }
 
@@ -228,10 +227,9 @@ public class ComputerProfileFragment extends Fragment {
         FirebaseDatabase.getInstance().getReference("Users").child(Common.getUid()).child("computers").child(computerUid).child("activityLog").orderByChild("negtime").limitToFirst(1).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot child : dataSnapshot.getChildren()){
-                    ComputerActivityLog computerActivityLog = child.getValue(ComputerActivityLog.class);
-                    ((TextView)view.findViewById(R.id.computer_last_seen)).setText(new SimpleDateFormat("EEE, d MMM yyyy HH:mm", Locale.UK).format(new Date (computerActivityLog.getTime()*1000)));
-                    break;
+                if (dataSnapshot.getChildren().iterator().hasNext()){
+                    ComputerActivityLog computerActivityLog = dataSnapshot.getChildren().iterator().next().getValue(ComputerActivityLog.class);
+                    ((TextView)view.findViewById(R.id.computer_last_seen)).setText(new SimpleDateFormat("EEEE, d MMMM yyyy HH:mm", Locale.UK).format(new Date (computerActivityLog.getTime()*1000)));
                 }
             }
 
