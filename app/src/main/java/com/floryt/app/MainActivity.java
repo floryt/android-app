@@ -28,6 +28,7 @@ import com.firebase.ui.auth.AuthUI;
 import com.floryt.app.fragments.AboutFragment;
 import com.floryt.app.fragments.AccountFragment;
 import com.floryt.app.fragments.ActivityLogFragment;
+import com.floryt.app.fragments.ComputersActivityLogFragment;
 import com.floryt.app.fragments.ContactUsFragment;
 import com.floryt.app.fragments.DashboardFragment;
 import com.floryt.app.fragments.HelpFragment;
@@ -93,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 setContent(ActivityLogFragment.getInstance());
                 break;
             case R.id.nav_computers_activity_log:
-//                setContent(ComputersActivityLogFragment.getInstance());
+                setContent(ComputersActivityLogFragment.getInstance());
                 break;
             case R.id.nav_my_computers:
                 setContent(MyComputersFragment.getInstance());
@@ -153,7 +154,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void setContent(Fragment fragment) {
         getFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
-        getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 
     private void signOut() {

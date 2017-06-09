@@ -69,4 +69,5 @@
     <string name="last_seen">Last Seen</string>
     <string name="missing_records">Missing records</string>
     <string name="owner">Owner</string>
+    <string name="activity_log_of_computer">Activity log of computer:</string>
 </resources>
