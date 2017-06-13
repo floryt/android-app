@@ -23,6 +23,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.floryt.auth.AuthUI;
 import com.floryt.auth.AuthUI.IdpConfig;
@@ -73,14 +74,6 @@ public class AuthMethodPickerActivity extends AppCompatBase implements IdpCallba
         mSaveSmartLock = mActivityHelper.getSaveSmartLockInstance();
 
         populateIdpList(mActivityHelper.getFlowParams().providerInfo);
-
-        int logoId = mActivityHelper.getFlowParams().logoId;
-        if (logoId == AuthUI.NO_LOGO) {
-            findViewById(R.id.logo_layout).setVisibility(View.GONE);
-        } else {
-            ImageView logo = (ImageView) findViewById(R.id.logo);
-            logo.setImageResource(logoId);
-        }
     }
 
     private void populateIdpList(List<IdpConfig> providers) {
@@ -105,7 +98,7 @@ public class AuthMethodPickerActivity extends AppCompatBase implements IdpCallba
                             + idpConfig.getProviderId());
             }
         }
-
+        Toast.makeText(this, "Test test test", Toast.LENGTH_LONG).show();
         ViewGroup btnHolder = (ViewGroup) findViewById(R.id.btn_holder);
         for (final Provider provider : mProviders) {
             View loginButton = getLayoutInflater()

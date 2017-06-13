@@ -45,6 +45,10 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
      */
     private void sendRegistrationToServer(String token) {
         assert FirebaseAuth.getInstance().getCurrentUser() != null;
-        FirebaseDatabase.getInstance().getReference("Users").child(Common.getUid()).child("deviceToken").setValue(token);
+        try {
+            FirebaseDatabase.getInstance().getReference("Users").child(Common.getUid()).child("deviceToken").setValue(token);
+        } catch (Exception ignored){
+
+        }
     }
 }
