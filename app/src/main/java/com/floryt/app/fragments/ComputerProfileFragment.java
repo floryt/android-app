@@ -1,24 +1,29 @@
 package com.floryt.app.fragments;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.MenuRes;
-import android.support.transition.Visibility;
+import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.PopupMenu;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,13 +33,15 @@ import com.floryt.app.R;
 import com.floryt.common.Common;
 import com.floryt.common.Computer;
 import com.floryt.common.ComputerActivityLog;
+import com.floryt.common.Service;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.firebase.auth.FirebaseAuth;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -42,11 +49,11 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Locale;
 
 public class ComputerProfileFragment extends Fragment {
     private MapView map;
+    private String computerUid;
 
     @Override
     public void onResume() {
@@ -85,6 +92,67 @@ public class ComputerProfileFragment extends Fragment {
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        final OnCompleteListener<Void> onCompleteListener = new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful())
+                    Toast.makeText(getContext(), "Command was sent successfully", Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(getContext(), "Failed to sent command", Toast.LENGTH_SHORT).show();
+            }
+        };
+        switch (item.getItemId()){
+            case R.id.lock_command:
+                Service.sendLockCommand(computerUid).addOnCompleteListener(onCompleteListener);
+                break;
+            case R.id.screenshot_command:
+                Service.screenshotCommand(computerUid).addOnCompleteListener(onCompleteListener);
+                break;
+            case R.id.shutdown_command:
+                Service.shutdownCommand(computerUid).addOnCompleteListener(onCompleteListener);
+                break;
+            case R.id.message_command:
+                LayoutInflater li = LayoutInflater.from(getContext());
+                View promptsView = li.inflate(R.layout.message_input_dialog, null);
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
+                alertDialogBuilder.setView(promptsView);
+                final EditText userInput = (EditText) promptsView.findViewById(R.id.editTextDialogUserInput);
+                alertDialogBuilder
+                        .setCancelable(false)
+                        .setPositiveButton("OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,int id) {
+                                        // get user input and set it to result
+                                        // edit text
+                                        String message = String.valueOf((userInput.getText()));
+                                        if (message != null && !message.isEmpty()){
+                                            Service.messageCommand(computerUid, message).addOnCompleteListener(onCompleteListener);
+                                        }
+                                    }
+                                })
+                        .setNegativeButton("Cancel",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+                // create alert dialog
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                // show it
+                alertDialog.show();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.commands_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         if (map != null) {
@@ -95,8 +163,10 @@ public class ComputerProfileFragment extends Fragment {
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.computer_profile_layout, container, false);
-        final String computerUid = getArguments().getString("computerUid");
+        computerUid = getArguments().getString("computerUid");
         assert computerUid != null;
+
+        setHasOptionsMenu(true);
 
         map = (MapView) view.findViewById(R.id.mapView);
         map.onCreate(savedInstanceState);
@@ -129,12 +199,6 @@ public class ComputerProfileFragment extends Fragment {
                 LinearLayout ownersList = (LinearLayout) view.findViewById(R.id.administrators_list);
                 ownersList.removeAllViews();
                 View item = inflater.inflate(R.layout.administrator_card_item, null);
-                item.findViewById(R.id.icon_options).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                    showPopupMenu(v, new AdministratorItemClickListener(), R.menu.administrator_item_menu);
-                    }
-                });
 
                 final ImageView image = ((ImageView)item.findViewById(R.id.image));
                 Glide.with(getContext())
@@ -239,34 +303,5 @@ public class ComputerProfileFragment extends Fragment {
             }
         });
         return view;
-    }
-
-
-
-    private void showPopupMenu(View view, PopupMenu.OnMenuItemClickListener onMenuItemClickListener, @MenuRes int menuRes) {
-        // inflate menu
-        PopupMenu popup = new PopupMenu(view.getContext(),view );
-        MenuInflater inflater = popup.getMenuInflater();
-        inflater.inflate(menuRes, popup.getMenu());
-        popup.setOnMenuItemClickListener(onMenuItemClickListener);
-        popup.show();
-    }
-
-    private class AdministratorItemClickListener implements PopupMenu.OnMenuItemClickListener {
-        @Override
-        public boolean onMenuItemClick(MenuItem menuItem) {
-            switch (menuItem.getItemId()) {
-                case R.id.remove:
-                    //TODO add implementation
-                    Toast.makeText(DashboardFragment.getInstance().getContext(), "Remove", Toast.LENGTH_SHORT).show();
-                    return true;
-                case R.id.show_user:
-                    //TODO add implementation
-                    Toast.makeText(DashboardFragment.getInstance().getContext(), "Show user", Toast.LENGTH_SHORT).show();
-                    return true;
-                default:
-            }
-            return false;
-        }
     }
 }

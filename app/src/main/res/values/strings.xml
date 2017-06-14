@@ -70,4 +70,9 @@
     <string name="missing_records">Missing records</string>
     <string name="owner">Owner</string>
     <string name="activity_log_of_computer">Activity log of computer:</string>
+    <string name="lock_command">Lock user</string>
+    <string name="screenshot_command">Take screenshot</string>
+    <string name="shutdown_command">Shutdown computer</string>
+    <string name="message_command">Present message</string>
+    <string name="type_your_message">Type Your Message:</string>
 </resources>
