@@ -8,6 +8,7 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewManager;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -38,13 +39,13 @@ public class ActivityLogFragment extends Fragment{
 
     public ActivityLogFragment() {
         database = FirebaseDatabase.getInstance();
-        activityLogRef = database.getReference("Users").child(Common.getUid()).child("activityLog").orderByChild("negtime");
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_log_layout, container, false);
+        activityLogRef = database.getReference("Users").child(Common.getUid()).child("activityLog").orderByChild("negtime");
+        final View view = inflater.inflate(R.layout.activity_log_layout, container, false);
         getActivity().setTitle("Activity log");
 
         ListView activityLogListView = (ListView) view.findViewById(R.id.activity_log_list_view);
@@ -60,6 +61,10 @@ public class ActivityLogFragment extends Fragment{
         final FirebaseListAdapter<PersonalActivityLog> activityLogListAdapter = new FirebaseListAdapter<PersonalActivityLog>(getActivity(), PersonalActivityLog.class, R.layout.activity_log_item, activityLogRef) {
             @Override
             protected void populateView(View v, final PersonalActivityLog personalActivityLog, final int position) {
+                View progressBar = view.findViewById(R.id.progress_bar_log);
+                if (progressBar != null){
+                    ((ViewManager)progressBar.getParent()).removeView(progressBar);
+                }
                 Drawable icon = null;
                 int textColor = Integer.MAX_VALUE;
                 switch (personalActivityLog.getType()){

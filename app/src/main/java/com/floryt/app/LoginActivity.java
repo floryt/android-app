@@ -27,23 +27,23 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.welcom_layout);
-        findViewById(R.id.sign_in_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivityForResult(
-                        AuthUI.getInstance().createSignInIntentBuilder()
-                                .setTheme(getSelectedTheme())
-                                .setLogo(getLogo())
-                                .setProviders(getProviders())
-                                .setTosUrl(getTosUrl())
-                                .setIsSmartLockEnabled(false)
-                                .setAllowNewEmailAccounts(false)
-                                .build(),
-                        RC_SIGN_IN);
-            }
-        });
+        startActivityForResult(
+                AuthUI.getInstance().createSignInIntentBuilder()
+                        .setTheme(getSelectedTheme())
+                        .setLogo(getLogo())
+                        .setProviders(getProviders())
+                        .setTosUrl(getTosUrl())
+                        .setIsSmartLockEnabled(false)
+                        .setAllowNewEmailAccounts(false)
+                        .build(),
+                RC_SIGN_IN);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

@@ -37,7 +37,6 @@
     <string name="unknown_sign_in_response">Unknown sign in response</string>
     <string name="sign_out_failed">Sign out failed</string>
     <string name="sign_in">Sign in</string>
-    <string name="activity_log">Activity log</string>
     <string name="dummy_ip">192.168.4.110</string>
     <string name="dummy_time">10:25 AM</string>
     <string name="dummy_email">Steven@gmail.com</string>
@@ -75,4 +74,7 @@
     <string name="shutdown_command">Shutdown computer</string>
     <string name="message_command">Present message</string>
     <string name="type_your_message">Type Your Message:</string>
+    <string name="last_activity">Last activity</string>
+    <string name="screenshots">Screenshots</string>
+    <string name="activity_log">Activity log</string>
 </resources>

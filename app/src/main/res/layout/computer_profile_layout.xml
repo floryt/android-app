@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    android:layout_height="match_parent"
+<ScrollView android:layout_height="match_parent"
     android:layout_width="match_parent"
     xmlns:card_view="http://schemas.android.com/tools"
     android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:paddingBottom="@dimen/activity_horizontal_margin">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -137,7 +137,7 @@
                     android:id="@+id/activity_log_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/activity_log"
+                    android:text="@string/last_activity"
                     android:textSize="14sp"
                     android:textColor="@color/text_gray"/>
 
@@ -151,8 +151,5 @@
 
             </RelativeLayout>
         </android.support.v7.widget.CardView>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/activity_horizontal_margin"/>
     </LinearLayout>
 </ScrollView>

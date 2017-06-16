@@ -23,7 +23,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.floryt.auth.AuthUI;
 import com.floryt.auth.AuthUI.IdpConfig;
@@ -98,7 +97,7 @@ public class AuthMethodPickerActivity extends AppCompatBase implements IdpCallba
                             + idpConfig.getProviderId());
             }
         }
-        Toast.makeText(this, "Test test test", Toast.LENGTH_LONG).show();
+
         ViewGroup btnHolder = (ViewGroup) findViewById(R.id.btn_holder);
         for (final Provider provider : mProviders) {
             View loginButton = getLayoutInflater()

@@ -46,6 +46,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -167,6 +168,8 @@ public class ComputerProfileFragment extends Fragment {
         assert computerUid != null;
 
         setHasOptionsMenu(true);
+
+        Toast.makeText(getContext(), FirebaseStorage.getInstance().getReference().child("Screenshots").child(computerUid).getPath(), Toast.LENGTH_SHORT).show();
 
         map = (MapView) view.findViewById(R.id.mapView);
         map.onCreate(savedInstanceState);

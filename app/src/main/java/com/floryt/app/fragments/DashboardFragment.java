@@ -9,6 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,16 +41,16 @@ public class DashboardFragment extends Fragment {
 
     public DashboardFragment() {
         database = FirebaseDatabase.getInstance();
-        myRef = database.getReference("Users").child(Common.getUid());
-        activityLogRef = myRef.child("ActivityLog");
-        myComputersRef = myRef.child("computers");
     }
 
 
     @Nullable
     @Override
     public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.dashboard_layout, container, false);
+        myRef = database.getReference("Users").child(Common.getUid());
+        activityLogRef = myRef.child("ActivityLog");
+        myComputersRef = myRef.child("computers");
+        final View view = inflater.inflate(R.layout.dashboard_layout, container, false);
         getActivity().setTitle("Dashboard");
         final LinearLayout activityLogLayout = (LinearLayout) view.findViewById(R.id.activity_log_list);
         final LinearLayout myComputersLayout = (LinearLayout) view.findViewById(R.id.my_computers_list_layout);
@@ -57,7 +58,7 @@ public class DashboardFragment extends Fragment {
         view.findViewById(R.id.activity_log_more_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentManager().beginTransaction().replace(R.id.content, ActivityLogFragment.getInstance()).addToBackStack(null).commit();
+                getFragmentManager().beginTransaction().replace(R.id.content, ActivityLogFragment.getInstance()).commit();
             }
         });
 
@@ -94,7 +95,7 @@ public class DashboardFragment extends Fragment {
         view.findViewById(R.id.my_computers_more_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentManager().beginTransaction().replace(R.id.content, MyComputersFragment.getInstance()).addToBackStack(null).commit();
+                getFragmentManager().beginTransaction().replace(R.id.content, MyComputersFragment.getInstance()).commit();
             }
         });
 
@@ -102,6 +103,10 @@ public class DashboardFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 myComputersLayout.removeAllViews();
+                View progressBar = view.findViewById(R.id.progress_bar_computers);
+                if (progressBar != null){
+                    ((ViewManager)progressBar.getParent()).removeView(progressBar);
+                }
                 for(final DataSnapshot computerData : dataSnapshot.getChildren()){
                     final Computer computer = computerData.getValue(Computer.class);
 
@@ -109,12 +114,11 @@ public class DashboardFragment extends Fragment {
                     item.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            //TODO add implementation
                             Bundle bundle = new Bundle();
                             bundle.putString("computerUid", computerData.getKey());
                             ComputerProfileFragment computerProfileFragment = new ComputerProfileFragment();
                             computerProfileFragment.setArguments(bundle);
-                            getFragmentManager().beginTransaction().replace(R.id.content, computerProfileFragment).addToBackStack(null).commit();
+                            getFragmentManager().beginTransaction().replace(R.id.content, computerProfileFragment).commit();
                         }
                     });
                     ((TextView)item.findViewById(R.id.computer_name)).setText(computer.getName());
@@ -125,7 +129,7 @@ public class DashboardFragment extends Fragment {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                //TODO add implementation
+                Toast.makeText(getContext(), "Failed to get computers", Toast.LENGTH_SHORT).show();
             }
         };
         myComputersRef.addValueEventListener(myComputersValueEventListener);

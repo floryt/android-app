@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/bg_list_row"
     android:clickable="true"
     android:focusable="true"
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:lines="1"
-            android:text="@string/dummy_computer_name"
+            tools:text="@string/dummy_computer_name"
             android:textSize="@dimen/text_primary"
             android:textStyle="bold" />
 
@@ -43,7 +43,7 @@
             android:ellipsize="end"
             android:lines="1"
             android:textColor="@color/text_gray"
-            android:text="@string/dummy_email"
+            tools:text="@string/dummy_email"
             android:textSize="@dimen/text_secondary" />
 
         <TextView
@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:lines="1"
-            android:text="@string/dummy_ip"
+            tools:text="@string/dummy_ip"
             android:textColor="@color/text_gray"
             android:textSize="@dimen/text_secondary" />
 
