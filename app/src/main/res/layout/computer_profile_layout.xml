@@ -2,9 +2,9 @@
 <ScrollView android:layout_height="match_parent"
     android:layout_width="match_parent"
     xmlns:card_view="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:paddingBottom="@dimen/activity_horizontal_margin">
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -13,50 +13,145 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:orientation="vertical">
-        <TextView
-            android:id="@+id/title_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/name"
-            android:textColor="@color/text_gray"
-            android:textSize="@dimen/text_secondary"/>
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/activity_horizontal_margin">
+                <TextView
+                    android:id="@+id/title_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/name"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/text_secondary"/>
+
+                <TextView
+                    android:id="@+id/computer_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_primary"/>
+
+                <TextView
+                    android:id="@+id/title_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/status"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/text_secondary"
+                    android:paddingTop="@dimen/activity_horizontal_margin"/>
+
+                <TextView
+                    android:id="@+id/computer_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_primary"/>
+
+
+                <TextView
+                    android:id="@+id/title_ip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ip_address"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/text_secondary"
+                    android:paddingTop="@dimen/activity_horizontal_margin"/>
+
+                <TextView
+                    android:id="@+id/computer_ip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/missing_ip_address"
+                    android:textSize="@dimen/text_primary"/>
+
+                <TextView
+                    android:id="@+id/title_last_seen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/last_seen"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/text_secondary"
+                    android:paddingTop="@dimen/activity_horizontal_margin"/>
+
+                <TextView
+                    android:id="@+id/computer_last_seen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/missing_records"
+                    android:textSize="@dimen/text_primary"/>
+
+                <TextView
+                    android:id="@+id/title_current_user"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/current_user"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/text_secondary"
+                    android:paddingTop="@dimen/activity_horizontal_margin"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:id="@+id/computer_current_user"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:textSize="@dimen/text_primary"/>
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
 
         <TextView
-            android:id="@+id/computer_name"
+            android:id="@+id/title_screenshots"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/dummy_computer_name"
-            android:textSize="@dimen/text_primary"/>
-
-        <TextView
-            android:id="@+id/title_ip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/ip_address"
+            android:text="@string/screenshots"
             android:textColor="@color/text_gray"
             android:textSize="@dimen/text_secondary"
-            android:paddingTop="@dimen/activity_horizontal_margin"/>
-        <TextView
-            android:id="@+id/computer_ip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/missing_ip_address"
-            android:textSize="@dimen/text_primary"/>
+            android:paddingTop="@dimen/activity_horizontal_margin"
+            android:visibility="gone"/>
 
-        <TextView
-            android:id="@+id/title_last_seen"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/last_seen"
-            android:textColor="@color/text_gray"
-            android:textSize="@dimen/text_secondary"
-            android:paddingTop="@dimen/activity_horizontal_margin"/>
-        <TextView
-            android:id="@+id/computer_last_seen"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/missing_records"
-            android:textSize="@dimen/text_primary"/>
+        <android.support.v7.widget.CardView
+            android:id="@+id/screenshots_card"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:visibility="gone"
+            app:cardCornerRadius="2dp">
+            <com.daimajia.slider.library.SliderLayout
+                android:id="@+id/slider"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                >
+                <com.daimajia.slider.library.Indicators.PagerIndicator
+                    android:id="@+id/floryt_indicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:paddingBottom="8dp"
+                    android:paddingEnd="4dp"
+                    android:gravity="center"
+                    app:selected_color="#0095BF"
+                    app:unselected_color="@color/material_deep_purple_500"
+                    app:selected_drawable="@drawable/ic_floryt_24dp"
+                    app:shape="oval"
+                    app:selected_padding_left="6dp"
+                    app:selected_padding_right="6dp"
+                    app:unselected_padding_left="2dp"
+                    app:unselected_padding_right="2dp"
+                    app:selected_width="6dp"
+                    app:selected_height="6dp"
+                    app:unselected_width="6dp"
+                    app:unselected_height="6dp"
+                    android:visibility="gone"
+                    />
+            </com.daimajia.slider.library.SliderLayout>
+        </android.support.v7.widget.CardView>
+
 
         <TextView
             android:id="@+id/title_location"
@@ -121,6 +216,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:paddingBottom="@dimen/activity_horizontal_margin"
             android:elevation="8dp"
             card_view:cardCornerRadius="2dp">
 

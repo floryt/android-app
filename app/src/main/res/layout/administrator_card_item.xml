@@ -41,8 +41,9 @@
         android:textColor="@color/text_gray"
         android:text="@string/dummy_email"
         android:textSize="@dimen/text_secondary"
-        android:layout_alignBottom="@+id/image"
-        android:layout_toEndOf="@+id/image"
-        android:paddingStart="12dp"/>
+        android:paddingStart="12dp"
+        android:paddingTop="4dp"
+        android:layout_below="@+id/name"
+        android:layout_toEndOf="@+id/image" />
 
 </RelativeLayout>

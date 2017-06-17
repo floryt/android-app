@@ -3,8 +3,10 @@ package com.floryt.app.fragments;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.MenuRes;
@@ -24,11 +26,17 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.daimajia.slider.library.Indicators.PagerIndicator;
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
+import com.floryt.app.PhotoViewActivity;
 import com.floryt.app.R;
 import com.floryt.common.Common;
 import com.floryt.common.Computer;
@@ -41,16 +49,26 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageMetadata;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StreamDownloadTask;
 
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Objects;
 
 public class ComputerProfileFragment extends Fragment {
     private MapView map;
@@ -111,7 +129,22 @@ public class ComputerProfileFragment extends Fragment {
                 Service.screenshotCommand(computerUid).addOnCompleteListener(onCompleteListener);
                 break;
             case R.id.shutdown_command:
-                Service.shutdownCommand(computerUid).addOnCompleteListener(onCompleteListener);
+                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which){
+                            case DialogInterface.BUTTON_POSITIVE:
+                                Service.shutdownCommand(computerUid).addOnCompleteListener(onCompleteListener);
+                                break;
+                            case DialogInterface.BUTTON_NEGATIVE:
+                                Toast.makeText(getContext(), "Shutdown aborted", Toast.LENGTH_SHORT).show();
+                                break;
+                        }
+                    }
+                };
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setMessage("Are you sure?").setPositiveButton("Yes", dialogClickListener)
+                        .setNegativeButton("No", dialogClickListener).show();
                 break;
             case R.id.message_command:
                 LayoutInflater li = LayoutInflater.from(getContext());
@@ -162,14 +195,21 @@ public class ComputerProfileFragment extends Fragment {
     }
 
     @Override
+    public void onStop() {
+        if (getView() != null)
+            ((SliderLayout)getView().findViewById(R.id.slider)).stopAutoCycle();
+        super.onStop();
+    }
+
+    @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.computer_profile_layout, container, false);
         computerUid = getArguments().getString("computerUid");
         assert computerUid != null;
-
         setHasOptionsMenu(true);
-
-        Toast.makeText(getContext(), FirebaseStorage.getInstance().getReference().child("Screenshots").child(computerUid).getPath(), Toast.LENGTH_SHORT).show();
+        SliderLayout sliderShow = (SliderLayout) view.findViewById(R.id.slider);
+        populateScreenshots(view, sliderShow);
+        sliderShow.setCustomIndicator((PagerIndicator) view.findViewById(R.id.floryt_indicator));
 
         map = (MapView) view.findViewById(R.id.mapView);
         map.onCreate(savedInstanceState);
@@ -177,9 +217,45 @@ public class ComputerProfileFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 final Computer computer = dataSnapshot.getValue(Computer.class);
+                if (getActivity() == null){
+                    return;
+                }
                 getActivity().setTitle(computer.getName());
                 ((TextView)view.findViewById(R.id.computer_name)).setText(computer.getName());
+                ((TextView)view.findViewById(R.id.computer_status)).setText(computer.getStatus() != null ? computer.getStatus().substring(0, 1).toUpperCase() + computer.getStatus().substring(1) : getString(R.string.unknown_status));
                 ((TextView)view.findViewById(R.id.computer_ip)).setText(computer.getIp() != null ? computer.getIp() : getString(R.string.missing_ip_address));
+
+                if (computer.getStatus() != null && Objects.equals(computer.getStatus().toLowerCase(), "logged in")){
+                    ((TextView)view.findViewById(R.id.computer_status)).setTextColor(ContextCompat.getColor(getContext(), R.color.material_green_700));
+
+                    if (computer.getLastUser() != null){
+                        ((TextView)view.findViewById(R.id.computer_current_user)).setText(computer.getLastUser());
+                        (view.findViewById(R.id.title_current_user)).setVisibility(View.VISIBLE);
+                        (view.findViewById(R.id.computer_current_user)).setVisibility(View.VISIBLE);
+                    }
+                } else {
+                    ((TextView)view.findViewById(R.id.computer_status)).setTextColor(ContextCompat.getColor(getContext(), R.color.tw__composer_red));
+                }
+
+                if (computer.getLastSeen() != 0){
+                    ((TextView)view.findViewById(R.id.computer_last_seen)).setText(new SimpleDateFormat("EEEE, d MMMM yyyy HH:mm", Locale.UK).format(new Date (computer.getLastSeen()*1000)));
+                } else {
+                    FirebaseDatabase.getInstance().getReference("Users").child(Common.getUid()).child("computers").child(computerUid).child("activityLog").orderByChild("negtime").limitToFirst(1).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.getChildren().iterator().hasNext()){
+                                ComputerActivityLog computerActivityLog = dataSnapshot.getChildren().iterator().next().getValue(ComputerActivityLog.class);
+                                ((TextView)view.findViewById(R.id.computer_last_seen)).setText(new SimpleDateFormat("EEEE, d MMMM yyyy HH:mm", Locale.UK).format(new Date (computerActivityLog.getTime()*1000)));
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            Toast.makeText(getContext(), "Failed to load last seen data: " + databaseError.getMessage(),Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+
 
                 if (computer.getLatitude() != null && computer.getLongitude() != null && !(computer.getLatitude().isEmpty() || computer.getLatitude().isEmpty())){
                     map.getMapAsync(new OnMapReadyCallback() {
@@ -290,21 +366,59 @@ public class ComputerProfileFragment extends Fragment {
                 Toast.makeText(getContext(), "Failed to load computer activity log: " + databaseError.getMessage(),Toast.LENGTH_SHORT).show();
             }
         });
+        return view;
+    }
 
-        FirebaseDatabase.getInstance().getReference("Users").child(Common.getUid()).child("computers").child(computerUid).child("activityLog").orderByChild("negtime").limitToFirst(1).addValueEventListener(new ValueEventListener() {
+    private void populateScreenshots(final View parentView, final SliderLayout sliderShow) {
+        final long ONE_MEGABYTE = 1024 * 1024;
+        final StorageReference computerScreenshots = FirebaseStorage.getInstance().getReference().child("Screenshots").child(computerUid);
+        computerScreenshots.child("index")
+                .getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.getChildren().iterator().hasNext()){
-                    ComputerActivityLog computerActivityLog = dataSnapshot.getChildren().iterator().next().getValue(ComputerActivityLog.class);
-                    ((TextView)view.findViewById(R.id.computer_last_seen)).setText(new SimpleDateFormat("EEEE, d MMMM yyyy HH:mm", Locale.UK).format(new Date (computerActivityLog.getTime()*1000)));
+            public void onSuccess(byte[] bytes) {
+                int numberOfPictures = Integer.parseInt(new String(bytes, StandardCharsets.UTF_8));
+                if (numberOfPictures > 0){
+                    parentView.findViewById(R.id.title_screenshots).setVisibility(View.VISIBLE);
+                    parentView.findViewById(R.id.screenshots_card).setVisibility(View.VISIBLE);
+                    parentView.findViewById(R.id.slider).setVisibility(View.VISIBLE);
+                    parentView.findViewById(R.id.floryt_indicator).setVisibility(View.VISIBLE);
+                }
+                StorageReference currentShot;
+                for (int i = 0; i < numberOfPictures ; i++){
+                    currentShot = computerScreenshots.child(String.format("%d.png", i));
+                    currentShot.getMetadata().addOnCompleteListener(new OnCompleteListener<StorageMetadata>() {
+                        @Override
+                        public void onComplete(@NonNull Task<StorageMetadata> task) {
+                            if (task.isSuccessful()){
+                                final StorageMetadata storageMetadata = task.getResult();
+                                if (storageMetadata.getDownloadUrl() == null)
+                                    return;
+                                TextSliderView textSliderView = new TextSliderView(getContext());
+                                textSliderView
+                                        .description(String.valueOf(new SimpleDateFormat("EEEE, d MMMM yyyy HH:mm", Locale.UK).format(new Date (storageMetadata.getCreationTimeMillis()))))
+                                        .image(storageMetadata.getDownloadUrl().toString());
+                                textSliderView.setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
+                                    @Override
+                                    public void onSliderClick(BaseSliderView slider) {
+                                        startActivity(new Intent(getContext(), PhotoViewActivity.class).putExtra("uri", storageMetadata.getDownloadUrl()));
+                                    }
+                                });
+                                sliderShow.addSlider(textSliderView);
+                            } else {
+                                try {
+                                    Toast.makeText(getContext(),task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                }catch (Exception e){}
+                            }
+                        }
+                    });
                 }
             }
-
+        }).addOnFailureListener(new OnFailureListener() {
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(getContext(), "Failed to load last seen data: " + databaseError.getMessage(),Toast.LENGTH_SHORT).show();
+            public void onFailure(@NonNull Exception exception) {
+                // No screenshots
             }
         });
-        return view;
+
     }
 }

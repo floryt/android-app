@@ -10,14 +10,20 @@ import java.util.ArrayList;
 
 public class Computer {
     private String name;
+    private String status;
+    private String lastUser;
     private String ip;
+    private long lastSeen;
     private String latitude, longitude;
     private ArrayList<String> users;
 
 
-    public Computer(String name, String ip, String latitude, String longitude) {
+    public Computer(String name, String status, String lastUser, String ip, long lastSeen, String latitude, String longitude) {
         this.name = name;
+        this.status = status;
+        this.lastUser = lastUser;
         this.ip = ip;
+        this.lastSeen = lastSeen;
         this.latitude = latitude;
         this.longitude = longitude;
 
@@ -56,5 +62,29 @@ public class Computer {
         }
 
         return usersString + users.get(users.size() - 1);
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public long getLastSeen() {
+        return lastSeen;
+    }
+
+    public void setLastSeen(long lastSeen) {
+        this.lastSeen = lastSeen;
+    }
+
+    public String getLastUser() {
+        return lastUser;
+    }
+
+    public void setLastUser(String lastUser) {
+        this.lastUser = lastUser;
     }
 }

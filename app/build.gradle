@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    buildToolsVersion "25.0.3"
     defaultConfig {
         applicationId "com.floryt.floryt"
         minSdkVersion 23
@@ -41,12 +41,19 @@ dependencies {
 
     compile 'com.google.android.gms:play-services-auth:10.2.6'
 
+    compile "com.android.support:support-v4:25.3.1"
+    compile 'com.squareup.picasso:picasso:2.3.2'
+    compile 'com.nineoldandroids:library:2.4.0'
+    compile 'com.daimajia.slider:library:1.1.5@aar'
+
     compile 'com.firebaseui:firebase-ui:1.2.0'
     compile 'com.firebaseui:firebase-ui-database:1.2.0'
     compile 'com.firebaseui:firebase-ui-auth:1.2.0'
 
     testCompile 'junit:junit:4.12'
     compile 'com.google.android.gms:play-services-maps:10.2.6'
+
+    compile 'com.github.chrisbanes:PhotoView:2.0.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

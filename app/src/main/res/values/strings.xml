@@ -65,6 +65,7 @@
     <string name="identity_verification_message">Did you just asked to sign in to</string>
     <string name="ip_missing_message">\"IP is not available\"</string>
     <string name="missing_ip_address">Missing IP address</string>
+    <string name="unknown_status">Unknown status</string>
     <string name="last_seen">Last Seen</string>
     <string name="missing_records">Missing records</string>
     <string name="owner">Owner</string>
@@ -77,4 +78,6 @@
     <string name="last_activity">Last activity</string>
     <string name="screenshots">Screenshots</string>
     <string name="activity_log">Activity log</string>
+    <string name="status">Status</string>
+    <string name="current_user">Current user</string>
 </resources>
