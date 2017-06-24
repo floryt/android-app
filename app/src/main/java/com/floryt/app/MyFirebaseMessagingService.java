@@ -1,11 +1,8 @@
 package com.floryt.app;
 
-/**
- * Created by StevenD on 11/04/2017.
- */
-
-import android.app.Activity;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -57,15 +54,29 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         HashMap<String, String> data = new HashMap<>(remoteMessage.getData());
         Log.d(TAG, data.toString());
         Class activity;
+        NotificationCompat.Builder mBuilder;
         switch (data.get("messageType")){
             case "identity":
                 activity = IdentityVerificationActivity.class;
+                mBuilder =
+                        new NotificationCompat.Builder(getApplicationContext())
+                                .setSmallIcon(R.drawable.ic_floryt_24dp)
+                                .setContentTitle("Identity verification request")
+                                .setContentText("Verify your identity to log in to the computer");
                 break;
             case "permission":
                 activity = PermissionRequestActivity.class;
+                mBuilder =
+                        new NotificationCompat.Builder(getApplicationContext())
+                                .setSmallIcon(R.drawable.ic_floryt_24dp)
+                                .setContentTitle("Permission request")
+                                .setContentText(String.format("%s wants to log in to your computer", data.get("guestName") == null ? "Someone" : data.get("guestName")));
                 break;
             default:
                 return;
+        }
+        if (mBuilder != null){
+            ((NotificationManager)getSystemService(NOTIFICATION_SERVICE)).notify(1, mBuilder.build());
         }
         Intent intent = new Intent(this, activity);
         intent.putExtra("data", data);
