@@ -207,9 +207,16 @@ public class ComputerProfileFragment extends Fragment {
         computerUid = getArguments().getString("computerUid");
         assert computerUid != null;
         setHasOptionsMenu(true);
-        SliderLayout sliderShow = (SliderLayout) view.findViewById(R.id.slider);
+        final SliderLayout sliderShow = (SliderLayout) view.findViewById(R.id.slider);
         populateScreenshots(view, sliderShow);
         sliderShow.setCustomIndicator((PagerIndicator) view.findViewById(R.id.floryt_indicator));
+
+        view.findViewById(R.id.refresh_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                populateScreenshots(view, sliderShow);
+            }
+        });
 
         map = (MapView) view.findViewById(R.id.mapView);
         map.onCreate(savedInstanceState);
@@ -371,6 +378,7 @@ public class ComputerProfileFragment extends Fragment {
 
     private void populateScreenshots(final View parentView, final SliderLayout sliderShow) {
         final long ONE_MEGABYTE = 1024 * 1024;
+        sliderShow.removeAllSliders();
         final StorageReference computerScreenshots = FirebaseStorage.getInstance().getReference().child("Screenshots").child(computerUid);
         computerScreenshots.child("index")
                 .getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
