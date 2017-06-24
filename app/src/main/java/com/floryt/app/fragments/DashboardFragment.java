@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.PopupMenu;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -167,13 +168,20 @@ public class DashboardFragment extends Fragment {
                         }
                     });
                     ((TextView)item.findViewById(R.id.computer_name)).setText(computer.getName());
-                    if (computer.getStatus() != null && Objects.equals(computer.getStatus().toLowerCase(), "logged in")){
-                       (item.findViewById(R.id.status_circle)).setBackground(ContextCompat.getDrawable(getContext(), R.drawable.circle_green));
-                    } else {
-                        (item.findViewById(R.id.status_circle)).setBackground(ContextCompat.getDrawable(getContext(), R.drawable.circle_red));
-                    }
+                    try {
 
+                        if (computer.getStatus() != null && Objects.equals(computer.getStatus().toLowerCase(), "logged in")){
+                            (item.findViewById(R.id.status_circle)).setBackground(ContextCompat.getDrawable(getContext(), R.drawable.circle_green));
+                        } else {
+                            (item.findViewById(R.id.status_circle)).setBackground(ContextCompat.getDrawable(getContext(), R.drawable.circle_red));
+                        }
+                    } catch (Exception e){
+                        Log.d("ComputerStatusCircle", e.getMessage());
+                    }
                     myComputersLayout.addView(item);
+                }
+                if (myComputersLayout.getChildCount() == 0){
+                    view.findViewById(R.id.my_computers_card).setVisibility(View.GONE);
                 }
             }
 
