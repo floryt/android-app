@@ -11,19 +11,19 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class Service {
     public static Task<Void> sendLockCommand(String computerUid) {
-        return FirebaseDatabase.getInstance().getReference("Commands").child(computerUid).child(Common.getUid()).push().setValue(new Pair<>("lock", true));
+        return FirebaseDatabase.getInstance().getReference("Commands").child(computerUid).child(Common.getUid()).push().setValue(new Pair<>("LockWorkstation", true));
     }
 
     public static Task<Void> screenshotCommand(String computerUid) {
-        return FirebaseDatabase.getInstance().getReference("Commands").child(computerUid).child(Common.getUid()).push().setValue(new Pair<>("take_screenshot", true));
+        return FirebaseDatabase.getInstance().getReference("Commands").child(computerUid).child(Common.getUid()).push().setValue(new Pair<>("TakeScreenshot", true));
     }
 
     public static Task<Void> shutdownCommand(String computerUid) {
-        return FirebaseDatabase.getInstance().getReference("Commands").child(computerUid).child(Common.getUid()).push().setValue(new Pair<>("shutdown", true));
+        return FirebaseDatabase.getInstance().getReference("Commands").child(computerUid).child(Common.getUid()).push().setValue(new Pair<>("Shutdown", true));
     }
 
     public static Task<Void> messageCommand(String computerUid, String message) {
-        return FirebaseDatabase.getInstance().getReference("Commands").child(computerUid).child(Common.getUid()).push().setValue(new Pair<>("present_message", message));
+        return FirebaseDatabase.getInstance().getReference("Commands").child(computerUid).child(Common.getUid()).push().setValue(new Pair<>("ShowMessage", message));
     }
 
 
