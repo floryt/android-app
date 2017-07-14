@@ -388,8 +388,6 @@ public class ComputerProfileFragment extends Fragment {
                 if (numberOfPictures > 0){
                     parentView.findViewById(R.id.title_screenshots).setVisibility(View.VISIBLE);
                     parentView.findViewById(R.id.screenshots_card).setVisibility(View.VISIBLE);
-                    parentView.findViewById(R.id.slider).setVisibility(View.VISIBLE);
-                    parentView.findViewById(R.id.floryt_indicator).setVisibility(View.VISIBLE);
                 }
                 StorageReference currentShot;
                 for (int i = 0; i < numberOfPictures ; i++){
