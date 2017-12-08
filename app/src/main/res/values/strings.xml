@@ -80,4 +80,7 @@
     <string name="activity_log">Activity log</string>
     <string name="status">Status</string>
     <string name="current_user">Current user</string>
+    <string name="demo">Demo</string>
+    <string name="owner_login">Owner login</string>
+    <string name="guest_login">Guest login</string>
 </resources>

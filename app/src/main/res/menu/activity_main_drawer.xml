@@ -66,6 +66,19 @@
         </menu>
     </item>
 
+    <item android:title="@string/demo">
+        <menu>
+            <item
+                android:id="@+id/nav_demo_owner"
+                android:icon="@drawable/ic_owner"
+                android:title="@string/owner_login" />
+            <item
+                android:id="@+id/nav_demo_guest"
+                android:icon="@drawable/ic_guest"
+                android:title="@string/guest_login" />
+        </menu>
+    </item>
+
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/sign_out_button"

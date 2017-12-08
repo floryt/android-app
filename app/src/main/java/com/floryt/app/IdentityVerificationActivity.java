@@ -1,50 +1,28 @@
 package com.floryt.app;
 
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.floryt.common.Common;
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.HashMap;
 import java.util.Locale;
-
-import static com.floryt.app.R.id.dark;
-import static com.floryt.app.R.id.mapView;
 
 public class IdentityVerificationActivity extends AppCompatActivity implements OnMapReadyCallback  {
     HashMap<String, String> data;
@@ -179,15 +157,14 @@ public class IdentityVerificationActivity extends AppCompatActivity implements O
 
     private void uploadIdentityAnswer(boolean isApproved){
         selected = true;
-        Common.uploadIdentityAnswer(getApplicationContext(), isApproved, data.get("verificationUid"));
+        if (data.get("verificationUid") != null)
+            Common.uploadIdentityAnswer(getApplicationContext(), isApproved, data.get("verificationUid"));
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         LatLng location = new LatLng(Double.parseDouble(data.get("computerLatitude")), Double.parseDouble(data.get("computerLongitude")));
-
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 10));
-
         googleMap.addMarker(new MarkerOptions()
                 .title("Computer location")
                 .position(location));

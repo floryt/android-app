@@ -9,7 +9,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.view.GravityCompat;
@@ -41,6 +40,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     public static final String TAG = "MainActivityLog";
@@ -121,6 +122,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_about:
                 setContent(AboutFragment.getInstance());
                 break;
+            case R.id.nav_demo_owner:
+                startDemo(true);
+                break;
+            case R.id.nav_demo_guest:
+                startDemo(false);
+                break;
             case R.id.sign_out_button:
                 signOut();
                 break;
@@ -128,6 +135,35 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void startDemo(boolean isAdmin) {
+        HashMap<String, String> data = new HashMap<>();
+
+        Intent intent;
+        if (isAdmin) {
+            intent = new Intent(this, IdentityVerificationActivity.class);
+            data.put("computerName", "Steven's Computer");
+            data.put("computerIp", "8.8.8.8");
+            data.put("deadline", String.valueOf((System.currentTimeMillis() / 1000) + 120));
+            data.put("computerLatitude", String.valueOf(31.782770));
+            data.put("computerLongitude", String.valueOf(34.640800));
+            data.put("verificationUid", null);
+            intent.putExtra("data", data);
+            startActivity(intent);
+        } else {
+            intent = new Intent(this, PermissionRequestActivity.class);
+            data = new HashMap<>();
+            data.put("guestPhotoUrl", String.valueOf(Common.getCurrentUser().getPhotoUrl()));
+            data.put("guestName", String.valueOf(Common.getCurrentUser().getDisplayName()));
+            data.put("guestEmail", String.valueOf(Common.getCurrentUser().getEmail()));
+            data.put("computerName", "Steven's Computer");
+            data.put("computerIp", "8.8.8.8");
+            data.put("deadline", String.valueOf((System.currentTimeMillis() / 1000) + 120));
+            data.put("permissionUid", null);
+            intent.putExtra("data", data);
+            startActivity(intent);
+        }
     }
 
     private void setUserHeader(FirebaseUser currentUser) {

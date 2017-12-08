@@ -1,9 +1,7 @@
 package com.floryt.app;
 
-import android.animation.ValueAnimator;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.content.ContextCompat;
@@ -13,8 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.view.animation.Animation;
-import android.view.animation.Transformation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -23,7 +19,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.floryt.common.Common;
-import com.twitter.sdk.android.tweetcomposer.ComposerActivity;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -134,6 +129,7 @@ public class PermissionRequestActivity extends AppCompatActivity {
 
     private void uploadPermission(boolean isApproved){
         selected = true;
+        if (data.get("permissionUid") == null) return;
         Common.uploadPermission(getApplicationContext(),
                 isApproved,
                 data.get("permissionUid"),
